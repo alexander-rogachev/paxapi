@@ -14,6 +14,18 @@ $ npm install
 $ node scenarios/create-retrieve-booking/scenario.js
 ```
 
+## Creating and retrieving flights
+
+```sh
+$ node scenarios/create-retrieve-flight/scenario.js
+```
+
+## Creating and retrieving bookings
+
+```sh
+$ node scenarios/create-retrieve-booking/scenario.js
+```
+
 Need an `.api_key`? Request for it!
 
 ## Wanna contribute?
