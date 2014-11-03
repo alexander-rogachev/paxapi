@@ -30,7 +30,7 @@ module.exports = function(params) {
           reject("401 - API key required");
           return;
         } else if (response.statusCode !== 200) {
-          reject("Something went wrong... :-(");
+          reject(response.statusCode + " - Something went wrong... :-(");
           return;
         }
         resolve(data);
@@ -60,7 +60,7 @@ module.exports = function(params) {
           reject("401 - API key required");
           return;
         } else if (response.statusCode !== 201) {
-          reject("Something went wrong... :-(");
+          reject(response.statusCode + " - Something went wrong... :-(");
           return;
         }
         var boid = response.headers.location.substring(response.headers.location.lastIndexOf('/') + 1);

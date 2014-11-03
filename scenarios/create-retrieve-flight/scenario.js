@@ -37,6 +37,15 @@ f.post(xml)
         departing: dep_datetime
       };
       console.log(flid);
+
+      console.log("Let's make sure it's there!!".blue);
+      f.get(data).then(
+        function(data) {
+          console.log("It's there!".green);
+          console.log(util.inspect(data, { showHidden: true, depth: null }));
+        },
+        console.log
+      );
    })
   .fail(function(err) {
     console.log(err.red);
