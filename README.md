@@ -11,7 +11,6 @@ $ git clone https://github.com/paxport/apiapis.git
 $ cd apiapis
 $ mv ~/Downloads/.api_key .
 $ npm install
-$ node scenarios/create-retrieve-booking/scenario.js
 ```
 
 ## Creating and retrieving flights
