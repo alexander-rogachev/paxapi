@@ -9,12 +9,12 @@ Paxport REST API Executable Specification
 ```sh
 $ git clone https://github.com/paxport/apiapis.git
 $ cd apiapis
-$ mv ~/Downloads/api_key .
+$ mv ~/Downloads/.api_key .
 $ npm install
 $ node scenarios/create-retrieve-booking/scenario.js
 ```
 
-Need an `api_key`? Request for it!
+Need an `.api_key`? Request for it!
 
 ## Wanna contribute?
 
