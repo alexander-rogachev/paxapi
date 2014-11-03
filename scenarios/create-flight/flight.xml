@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
 <mes:FlightSchedule xmlns:mes="http://api.paxport.se/openpax/messages" xmlns:typ="http://api.paxport.se/openpax/types">
-    <typ:FlightNumber>${flino}</typ:FlightNumber>
+    <typ:FlightNumber>${flno}</typ:FlightNumber>
     <typ:SegmentList>
         <typ:Segment>
             <typ:FlightId>
                 <typ:CarrierCode>${prefix}</typ:CarrierCode>
-                <typ:FlightNumber>${flino}</typ:FlightNumber>
+                <typ:FlightNumber>${flno}</typ:FlightNumber>
                 <typ:DepartureDateTime>2014-12-01T07:45:00Z</typ:DepartureDateTime>
                 <typ:DepartureAirportCode>ARN</typ:DepartureAirportCode>
             </typ:FlightId>

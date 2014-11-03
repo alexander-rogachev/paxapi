@@ -4,7 +4,7 @@ var fs = require('fs');
 var pd = require('pretty-data').pd;
 var colors = require('colors');
 var apikey = require('./../../util/_apikey');
-var flinogen = require('./../../util/_flinogen');
+var flnogen = require('./../../util/_flnogen');
 var b = require('./../../api/flight')(
   {
     client: new Client(),
@@ -24,7 +24,7 @@ var b = require('./../../api/flight')(
 console.log('Wanna create a flight?'.blue);
 var prefix = 'BLX';
 var raw = fs.readFileSync(__dirname + '/flight.xml', { encoding: 'UTF8' });
-var xml = pd.xmlmin(raw).replace('${flino}', flinogen.flinogen(3, prefix)).replace('${prefix}', prefix);
+var xml = pd.xmlmin(raw).replace('${flno}', flnogen.flnogen(3, prefix)).replace('${prefix}', prefix);
 b.post(xml)
   .then(
     function(data) {
