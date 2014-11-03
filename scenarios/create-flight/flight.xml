@@ -6,7 +6,7 @@
             <typ:FlightId>
                 <typ:CarrierCode>${prefix}</typ:CarrierCode>
                 <typ:FlightNumber>${flno}</typ:FlightNumber>
-                <typ:DepartureDateTime>2014-12-01T07:45:00Z</typ:DepartureDateTime>
+                <typ:DepartureDateTime>${dep_datetime}</typ:DepartureDateTime>
                 <typ:DepartureAirportCode>ARN</typ:DepartureAirportCode>
             </typ:FlightId>
             <typ:DepartureAirport>

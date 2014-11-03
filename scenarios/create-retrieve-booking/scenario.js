@@ -26,16 +26,21 @@ var b = require('./../../api/booking')(
 console.log('Wanna create a booking?'.blue);
 var raw = fs.readFileSync(__dirname + '/booking.xml', { encoding: 'UTF8' });
 //var raw = js2xmlparser("mes:Booking", fs.readFileSync(__dirname + '/booking.json', { encoding: 'UTF8' }));
-var xml = pd.xmlmin(raw).replace('${bono}', bonogen.bonogen(7));
+var bono = bonogen.bonogen(7);
+var xml = pd.xmlmin(raw).replace('${bono}', bono);
 
 b.post(xml)
   .then(
     function(data) {
       console.log('Created!'.green);
-      console.log(util.inspect(data, { showHidden: true, depth: null }));
+      var boid = {
+        id: data,
+        number: bono
+      };
+      console.log(boid);
 
       console.log("Let's make sure it's there!!".blue);
-      b.get(data['ns2:BookingReference'].Id).then(
+      b.get(data).then(
         function(data) {
           console.log("It's there!".green);
           console.log(util.inspect(data, { showHidden: true, depth: null }));

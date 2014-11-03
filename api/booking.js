@@ -63,7 +63,8 @@ module.exports = function(params) {
           reject("Something went wrong... :-(");
           return;
         }
-        resolve(data);
+        var boid = response.headers.location.substring(response.headers.location.lastIndexOf('/') + 1);
+        resolve(boid.replace('#', ''));
 
       });
 

@@ -5,32 +5,38 @@ var pd = require('pretty-data').pd;
 var colors = require('colors');
 var apikey = require('./../../util/_apikey');
 var flnogen = require('./../../util/_flnogen');
-var b = require('./../../api/flight')(
+var f = require('./../../api/flight')(
   {
     client: new Client(),
-    verbose: false,
+    verbose: true,
     apikey: apikey.getSync(),
     baseUrl: 'https://staging.paxport.se/openpax2-api/rest'
   }
 );
 
 /*
-  Scenario: create and retrieve a booking
+  Scenario: create and retrieve a flight
     Given: booking is created
     When: retrieve the booking by id
     Then: booking is retrieved
  */
 
 console.log('Wanna create a flight?'.blue);
-var prefix = 'BLX';
 var raw = fs.readFileSync(__dirname + '/flight.xml', { encoding: 'UTF8' });
-var xml = pd.xmlmin(raw).replace('${flno}', flnogen.flnogen(3, prefix)).replace('${prefix}', prefix);
-b.post(xml)
+var prefix = 'BLX';
+var flno = flnogen.flnogen(3, prefix);
+var dep_datetime = '2014-12-01T07:45:00Z';
+var xml = pd.xmlmin(raw).replace('${flno}', flno).replace('${prefix}', prefix).replace('${dep_datetime}', dep_datetime);
+f.post(xml)
   .then(
     function(data) {
       console.log('Created!'.green);
-      //TODO here we receive an empty data
-      console.log(data);
+      var flid = {
+        id: data,
+        number: flno,
+        departing: dep_datetime
+      };
+      console.log(flid);
    })
   .fail(function(err) {
     console.log(err.red);

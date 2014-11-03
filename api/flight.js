@@ -35,7 +35,8 @@ module.exports = function(params) {
           reject("Something went wrong... :-(");
           return;
         }
-        resolve(data);
+        var flid = response.headers.location.substring(response.headers.location.lastIndexOf('/') + 1);
+        resolve(flid.replace('#', ''));
 
       });
 
