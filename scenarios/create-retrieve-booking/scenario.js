@@ -24,7 +24,8 @@ var b = require('./../../api/booking')(
  */
 
 console.log('Wanna create a booking?'.blue);
-var raw = js2xmlparser("mes:Booking", fs.readFileSync(__dirname + '/booking.json', { encoding: 'UTF8' }));
+var raw = fs.readFileSync(__dirname + '/booking.xml', { encoding: 'UTF8' });
+//var raw = js2xmlparser("mes:Booking", fs.readFileSync(__dirname + '/booking.json', { encoding: 'UTF8' }));
 var xml = pd.xmlmin(raw).replace('${bono}', bonogen.bonogen(7));
 
 b.post(xml)
