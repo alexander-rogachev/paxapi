@@ -33,3 +33,5 @@ node_modules
 #Auth_key file
 auth_key
 api_key
+.auth_key
+.api_key
