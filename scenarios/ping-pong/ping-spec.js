@@ -18,4 +18,11 @@ var h = require('./../../api/help')(
     Then: pong!
  */
 
-h.ping().then(console.log, console.log);
+describe("ping", function() {
+  it("should respond with pong", function(done) {
+    h.ping().then(function(data) {
+      expect(data).toEqual("pong!");
+      done();
+    }, console.log);
+  });
+});

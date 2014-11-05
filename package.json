@@ -9,6 +9,7 @@
     "node-rest-client": "1.4.1",
     "pretty-data": "~0.40.0",
     "q": "~1.0.1",
-    "js2xmlparser": "~0.1.5"
+    "js2xmlparser": "~0.1.5",
+    "jasmine-node": "~1.14.5"
   }
 }
