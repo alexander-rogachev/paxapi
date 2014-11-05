@@ -56,7 +56,7 @@ module.exports = function(params) {
    Returns server version information and other metadata attributes.
    */
   module.version = function() {
-//    todo:
+//    todo: IL
   };
 
   return module;

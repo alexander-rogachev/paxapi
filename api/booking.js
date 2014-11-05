@@ -13,6 +13,7 @@ module.exports = function(params) {
 
   /*
   GET /bookings/{bookingId}/detail
+  todo: DK
    */
   module.get = function(bid) {
     return Q.Promise(function(resolve, reject, notify) {
@@ -42,6 +43,7 @@ module.exports = function(params) {
 
   /*
   POST /bookings/
+  todo DK
    */
   module.post = function(bxml) {
     return Q.Promise(function(resolve, reject, notify) {
