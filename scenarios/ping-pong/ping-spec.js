@@ -1,4 +1,5 @@
 var Client = require('node-rest-client').Client;
+var should = require('chai').should();
 
 var apikey = require('./../../util/_apikey');
 
@@ -21,6 +22,7 @@ var h = require('./../../api/help')(
 describe("ping", function() {
   it("should respond with pong", function(done) {
     h.ping().then(function(data) {
+      console.log(data);
       expect(data).toEqual("pong!");
       done();
     }, console.log);
