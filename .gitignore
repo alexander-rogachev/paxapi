@@ -30,8 +30,8 @@ node_modules
 # IntelliJ IDEA files
 .idea
 
-#Auth_key file
-auth_key
-api_key
-.auth_key
-.api_key
+#Api_key file
+auth_key*
+api_key*
+.auth_key*
+.api_key*
