@@ -12,7 +12,7 @@ var b = require('./../../api/booking')(
     client: new Client(),
     verbose: true,
     apikey: apikey.getSync(),
-    baseUrl: 'https://staging.paxport.se/openpax2-api/rest'
+    baseUrl: 'http://trigada.paxport.se:8080/openpax2-api/rest'
   }
 );
 
