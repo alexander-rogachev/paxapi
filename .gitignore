@@ -34,4 +34,5 @@ node_modules
 auth_key*
 api_key*
 .auth_key*
-.api_key*
+
+apiapis.iml

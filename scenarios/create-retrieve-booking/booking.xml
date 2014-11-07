@@ -1,15 +1,15 @@
 <?xml version='1.0' encoding='utf-8'?>
 <mes:Booking xmlns:mes="http://api.paxport.se/openpax/messages" xmlns:typ="http://api.paxport.se/openpax/types">
     <typ:BookingNumber>${bono}</typ:BookingNumber>
-    <typ:CarrierCode>BLX</typ:CarrierCode>
-    <typ:TourOperatorName>Fritidsresor</typ:TourOperatorName>
-    <typ:TourOperatorCode>FRI</typ:TourOperatorCode>
+    <typ:CarrierCode>TST</typ:CarrierCode>
+    <typ:TourOperatorName>Test</typ:TourOperatorName>
+    <typ:TourOperatorCode>TTT</typ:TourOperatorCode>
     <typ:FlightList>
         <!--1 or more repetitions:-->
         <typ:Flight>
             <typ:FlightId>
-                <typ:CarrierCode>BLX</typ:CarrierCode>
-                <typ:FlightNumber>BLX111</typ:FlightNumber>
+                <typ:CarrierCode>TST</typ:CarrierCode>
+                <typ:FlightNumber>TST111</typ:FlightNumber>
                 <typ:DepartureDateTime>2014-12-01T07:45:00Z</typ:DepartureDateTime>
             </typ:FlightId>
             <typ:DepartureAirport>
