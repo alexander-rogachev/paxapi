@@ -24,8 +24,6 @@ $ node scenarios/create-retrieve-flight/scenario.js
 $ node scenarios/create-retrieve-booking/scenario.js
 ```
 
-Need an `.api_key`? Request for it!
-
 ## Wanna contribute?
 
 Don't know how? There are 2 ways so far:
