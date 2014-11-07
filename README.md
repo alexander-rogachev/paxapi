@@ -9,7 +9,6 @@ Paxport REST API Executable Specification
 ```sh
 $ git clone https://github.com/paxport/apiapis.git
 $ cd apiapis
-$ mv ~/Downloads/.api_key .
 $ npm install
 ```
 
