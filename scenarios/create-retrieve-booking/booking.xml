@@ -4,6 +4,7 @@
     <typ:CarrierCode>TST</typ:CarrierCode>
     <typ:TourOperatorName>Test</typ:TourOperatorName>
     <typ:TourOperatorCode>TTT</typ:TourOperatorCode>
+    <!-- todo: make it a out and in booking - most frequent case of all bookings -->
     <typ:FlightList>
         <!--1 or more repetitions:-->
         <typ:Flight>
@@ -31,6 +32,7 @@
             <typ:Category>adult</typ:Category>
             <typ:Age>30</typ:Age>
             <typ:Gender>male</typ:Gender>
+            <!-- todo: remove APIS information from this simple scenario; APIS will be used in booking-security-info scenarios -->
             <typ:ApisInfo>
                 <!--Optional:-->
                 <typ:TravelDocumentList>
