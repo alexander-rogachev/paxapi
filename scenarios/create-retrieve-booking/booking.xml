@@ -6,7 +6,6 @@
     <typ:TourOperatorCode>TTT</typ:TourOperatorCode>
     <!-- todo: make it a out and in booking - most frequent case of all bookings -->
     <typ:FlightList>
-        <!--1 or more repetitions:-->
         <typ:Flight>
             <typ:FlightId>
                 <typ:CarrierCode>TST</typ:CarrierCode>
@@ -14,12 +13,10 @@
                 <typ:DepartureDateTime>2014-12-01T07:45:00Z</typ:DepartureDateTime>
             </typ:FlightId>
             <typ:DepartureAirport>
-                <!--You may enter the following 4 items in any order-->
                 <typ:Code>ARN</typ:Code>
             </typ:DepartureAirport>
             <typ:ArrivalTime>2014-12-01T10:45:00Z</typ:ArrivalTime>
             <typ:ArrivalAirport>
-                <!--You may enter the following 4 items in any order-->
                 <typ:Code>BKK</typ:Code>
             </typ:ArrivalAirport>
             <typ:CabinClass>C</typ:CabinClass>
@@ -36,7 +33,6 @@
             <typ:ApisInfo>
                 <!--Optional:-->
                 <typ:TravelDocumentList>
-                    <!--Zero or more repetitions:-->
                     <typ:TravelDocument>
                         <!--Optional:-->
                         <typ:TravelDocumentType>P</typ:TravelDocumentType>
