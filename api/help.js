@@ -55,8 +55,31 @@ module.exports = function(params) {
    GET /help/version
    Returns server version information and other metadata attributes.
    */
+  //todo IL
   module.version = function() {
-//    todo: IL
+    return Q.Promise(function(resolve, reject, notify) {
+
+      var args = {
+        headers: { "Content-Type": "application/xml", "Authorization": 'Basic ' + module.apikey }
+      };
+      var url = module.baseUrl + '/help/version';
+      if (module.verbose) {
+        console.log('GET ' + url + ' ...');
+      }
+      module.client.get(url, args, function(data, response) {
+
+        if (response.statusCode === 401) {
+          reject("401 - API key required");
+          return;
+        } else if (response.statusCode !== 200) {
+          reject(response.statusCode + " - Something went wrong... :-(");
+          return;
+        }
+        resolve(data);
+
+      });
+
+    });
   };
 
   return module;
