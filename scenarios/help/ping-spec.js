@@ -1,5 +1,4 @@
 var Client = require('node-rest-client').Client;
-var should = require('chai').should();
 
 var apikey = require('./../../util/_apikey');
 

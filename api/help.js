@@ -55,7 +55,6 @@ module.exports = function(params) {
    GET /help/version
    Returns server version information and other metadata attributes.
    */
-  //todo IL
   module.version = function() {
     return Q.Promise(function(resolve, reject, notify) {
 
