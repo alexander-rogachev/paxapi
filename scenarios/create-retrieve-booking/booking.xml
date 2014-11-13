@@ -6,6 +6,7 @@
     <typ:TourOperatorCode>TTT</typ:TourOperatorCode>
     <!-- todo: make it a out and in booking - most frequent case of all bookings -->
     <typ:FlightList>
+        <!--1 or more repetitions:-->
         <typ:Flight>
             <typ:FlightId>
                 <typ:CarrierCode>TST</typ:CarrierCode>
@@ -24,8 +25,8 @@
     </typ:FlightList>
     <typ:PassengerList>
         <typ:Passenger>
-            <typ:FirstName>Alex</typ:FirstName>
-            <typ:LastName>Rogachev</typ:LastName>
+            <typ:FirstName>${passengerName}</typ:FirstName>
+            <typ:LastName>${passengerSurname}</typ:LastName>
             <typ:Category>adult</typ:Category>
             <typ:Age>30</typ:Age>
             <typ:Gender>male</typ:Gender>
@@ -33,6 +34,7 @@
             <typ:ApisInfo>
                 <!--Optional:-->
                 <typ:TravelDocumentList>
+                    <!--Zero or more repetitions:-->
                     <typ:TravelDocument>
                         <!--Optional:-->
                         <typ:TravelDocumentType>P</typ:TravelDocumentType>
@@ -47,11 +49,11 @@
                         <!--Optional:-->
                         <typ:TravelDocumentExpiryDate>2015-12-14</typ:TravelDocumentExpiryDate>
                         <!--Optional:-->
-                        <typ:TravelDocumentFirstGivenName>Alex</typ:TravelDocumentFirstGivenName>
+                        <typ:TravelDocumentFirstGivenName>${passengerName}</typ:TravelDocumentFirstGivenName>
                         <!--Optional:-->
                         <typ:TravelDocumentSecondGivenName>HGH</typ:TravelDocumentSecondGivenName>
                         <!--Optional:-->
-                        <typ:TravelDocumentLastName>Rogachev</typ:TravelDocumentLastName>
+                        <typ:TravelDocumentLastName>${passengerSurname}</typ:TravelDocumentLastName>
                         <!--Optional:-->
                         <typ:GenderCode>M</typ:GenderCode>
                     </typ:TravelDocument>
