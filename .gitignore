@@ -29,9 +29,4 @@ node_modules
 
 # IntelliJ IDEA files
 .idea
-
-#Api_key file
-auth_key*
-api_key*
-.auth_key*
-.api_key*
+apiapis.iml

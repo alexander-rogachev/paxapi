@@ -1,1 +1,1 @@
-todo
+scenario.js is a simple example of creating a booking and retrieving it by id

@@ -10,7 +10,7 @@ var f = require('./../../api/flight')(
     client: new Client(),
     verbose: true,
     apikey: apikey.getSync(),
-    baseUrl: 'https://staging.paxport.se/openpax2-api/rest'
+    baseUrl: 'http://trigada.paxport.se:8080/openpax2-api/rest'
   }
 );
 
@@ -23,7 +23,7 @@ var f = require('./../../api/flight')(
 
 console.log('Wanna create a flight?'.blue);
 var raw = fs.readFileSync(__dirname + '/flight.xml', { encoding: 'UTF8' });
-var prefix = 'BLX';
+var prefix = 'TST';
 var flno = flnogen.flnogen(3, prefix);
 var dep_datetime = '2014-12-01T07:45:00Z';
 var xml = pd.xmlmin(raw).replace('${flno}', flno).replace('${prefix}', prefix).replace('${dep_datetime}', dep_datetime);
