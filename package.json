@@ -10,6 +10,8 @@
     "pretty-data": "~0.40.0",
     "q": "~1.0.1",
     "js2xmlparser": "~0.1.5",
-    "jasmine-node": "~1.14.5"
+    "jasmine-node": "~1.14.5",
+    "coffee-script": "~1.7.1",
+    "wait.for": "~0.6.6"
   }
 }
