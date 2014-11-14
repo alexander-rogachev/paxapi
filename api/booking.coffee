@@ -5,6 +5,7 @@ pd = require('pretty-data').pd;
 fs = require('fs');
 util = require('util');
 wait = require('wait.for');
+generatePerson = require('./../util/_generatePerson');
 
 bookingApi = require('./booking.js')
   client: new Client(),
@@ -22,12 +23,14 @@ class Booking
 
   json: {}
 
-
   create: ->
     raw = fs.readFileSync('scenarios/create-retrieve-booking/booking.xml', { encoding: 'UTF8' });
+    person = generatePerson.get();
     bono = bonogen.bonogen(7);
-#    todo need replace data in xml from json
-    xml = pd.xmlmin(raw).replace('${bono}', bono);
+    xml = pd.xmlmin(raw).replace('${bono}', bono).replace(/\$\{passengerName\}/g, person.firstName).replace(/\$\{passengerSurname\}/g, person.lastName).replace('${genderCode}', person.sex.charAt(0).toUpperCase())
+      .replace(/\$\{sex\}/g, person.sex).replace(/\$\{street\}/g, person.street).replace(/\$\{city\}/g, person.city).replace(/\$\{state\}/g, person['state']).replace(/\$\{zipCode\}/g, person.zipCode);
+
+    #    todo need replace data in xml from json
     return bookingApi.postSync(xml)
 
   passengers: ->
