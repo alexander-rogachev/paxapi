@@ -6,6 +6,7 @@
     <typ:TourOperatorCode>TTT</typ:TourOperatorCode>
     <!-- todo: make it a out and in booking - most frequent case of all bookings -->
     <typ:FlightList>
+        <!--1 or more repetitions:-->
         <typ:Flight>
             <typ:FlightId>
                 <typ:CarrierCode>TST</typ:CarrierCode>
@@ -24,22 +25,23 @@
     </typ:FlightList>
     <typ:PassengerList>
         <typ:Passenger>
-            <typ:FirstName>Alex</typ:FirstName>
-            <typ:LastName>Rogachev</typ:LastName>
+            <typ:FirstName>${passengerName}</typ:FirstName>
+            <typ:LastName>${passengerSurname}</typ:LastName>
             <typ:Category>adult</typ:Category>
             <typ:Age>30</typ:Age>
-            <typ:Gender>male</typ:Gender>
+            <typ:Gender>${sex}</typ:Gender>
             <!-- todo: remove APIS information from this simple scenario; APIS will be used in booking-security-info scenarios -->
             <typ:ApisInfo>
                 <!--Optional:-->
                 <typ:TravelDocumentList>
+                    <!--Zero or more repetitions:-->
                     <typ:TravelDocument>
                         <!--Optional:-->
                         <typ:TravelDocumentType>P</typ:TravelDocumentType>
                         <!--Optional:-->
                         <typ:TravelDocumentNumber>36247</typ:TravelDocumentNumber>
                         <!--Optional:-->
-                        <typ:TravelDocumentIssuingCountry>RUS</typ:TravelDocumentIssuingCountry>
+                        <typ:TravelDocumentIssuingCountry>US</typ:TravelDocumentIssuingCountry>
                         <!--Optional:-->
                         <typ:PassengerNationality>RUS</typ:PassengerNationality>
                         <!--Optional:-->
@@ -47,40 +49,40 @@
                         <!--Optional:-->
                         <typ:TravelDocumentExpiryDate>2015-12-14</typ:TravelDocumentExpiryDate>
                         <!--Optional:-->
-                        <typ:TravelDocumentFirstGivenName>Alex</typ:TravelDocumentFirstGivenName>
+                        <typ:TravelDocumentFirstGivenName>${passengerName}</typ:TravelDocumentFirstGivenName>
                         <!--Optional:-->
                         <typ:TravelDocumentSecondGivenName>HGH</typ:TravelDocumentSecondGivenName>
                         <!--Optional:-->
-                        <typ:TravelDocumentLastName>Rogachev</typ:TravelDocumentLastName>
+                        <typ:TravelDocumentLastName>${passengerSurname}</typ:TravelDocumentLastName>
                         <!--Optional:-->
-                        <typ:GenderCode>M</typ:GenderCode>
+                        <typ:GenderCode>${genderCode}</typ:GenderCode>
                     </typ:TravelDocument>
                 </typ:TravelDocumentList>
                 <!--Optional:-->
                 <typ:ResidenceAddress>
                     <!--Optional:-->
-                    <typ:CountryCode>RUS</typ:CountryCode>
+                    <typ:CountryCode>US</typ:CountryCode>
                     <!--Optional:-->
-                    <typ:State>YU</typ:State>
+                    <typ:State>${state}</typ:State>
                     <!--Optional:-->
-                    <typ:City>IZHEVSK</typ:City>
+                    <typ:City>${city}</typ:City>
                     <!--Optional:-->
-                    <typ:Street>LENINA</typ:Street>
+                    <typ:Street>${street}</typ:Street>
                     <!--Optional:-->
-                    <typ:PostalCode>1234678</typ:PostalCode>
+                    <typ:PostalCode>${zipCode}</typ:PostalCode>
                 </typ:ResidenceAddress>
                 <!--Optional:-->
                 <typ:DestinationAddress>
                     <!--Optional:-->
-                    <typ:CountryCode>RUS</typ:CountryCode>
+                    <typ:CountryCode>US</typ:CountryCode>
                     <!--Optional:-->
-                    <typ:State>UIU</typ:State>
+                    <typ:State>${state}</typ:State>
                     <!--Optional:-->
-                    <typ:City>IZHEVSK</typ:City>
+                    <typ:City>${city}</typ:City>
                     <!--Optional:-->
-                    <typ:Street>LENINA</typ:Street>
+                    <typ:Street>${street}</typ:Street>
                     <!--Optional:-->
-                    <typ:PostalCode>2764723</typ:PostalCode>
+                    <typ:PostalCode>${zipCode}</typ:PostalCode>
                 </typ:DestinationAddress>
                 <!--Optional:-->
                 <typ:RedressNumber>3827648</typ:RedressNumber>
