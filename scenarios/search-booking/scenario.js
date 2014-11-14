@@ -17,5 +17,5 @@ var bb = require('./../../api/bookings')(
     When: searching for it by bono and depdate
     Then: booking is found
  */
-// todo: booking ZY987654 is supposed to be in the DB at the time scenario is being run. Test booking should be created and deleted every time scenario is being run. - AR
+// todo: booking PD10Y64 is supposed to be in the DB at the time scenario is being run. Test booking should be created and deleted every time scenario is being run. - AR
 bb.get('PD10Y64', '2014-12-01 08:45').then(console.log, console.log);
