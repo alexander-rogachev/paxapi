@@ -74,7 +74,8 @@ module.exports = function(params) {
                   reject(response.statusCode + " - Something went wrong... :-(");
                   return;
               }
-              resolve(data);
+              var boid = data['ns2:BookingReferenceList']['ns2:BookingReference'][0]['Id'][0];
+              resolve(boid);
 
           });
 
