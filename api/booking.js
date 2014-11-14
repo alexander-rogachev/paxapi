@@ -159,7 +159,30 @@ module.exports = function (params) {
    PUT /bookings/{bookingId}
    */
   module.put = function (bid, bxml) {
-//    todo:
+    return Q.Promise(function(resolve, reject, notify) {
+
+      var args = {
+        data: bxml,
+        headers: { "Content-Type": "application/xml", "Authorization": 'Basic ' + module.apikey }
+      };
+      var url = module.baseUrl + '/bookings/' + bid + '/';
+      if (module.verbose) {
+        console.log('PUT ' + url + ' with XML ...');
+      }
+      module.client.put(url, args, function(data, response) {
+
+        if (response.statusCode === 401) {
+          reject("401 - API key required");
+          return;
+        } else if (response.statusCode !== 200) {
+          reject(response.statusCode + " - Something went wrong... :-(");
+          return;
+        }
+        resolve(data);
+
+      });
+
+    });
   };
 
   return module;

@@ -20,15 +20,15 @@ var b = require('./../../api/booking')(
   }
 );
 /*
-  Scenario: create and retrieve a booking
-    Given: booking is created
-    When: retrieve the booking by id
-    Then: booking is retrieved
+  Scenario: retrieve and cancel a booking
+    Given: retrieve the booking by bono and depdate
+    When: cancel booking by id
+    Then: booking is cancelled
  */
 
 console.log('Wanna cancel a booking?'.blue);
 
-bb.get('PD10Y64', '2014-12-01 08:45')
+bb.get('PD10Y64', '2014-12-01')
     .then(
     function(data) {
       console.log(data);

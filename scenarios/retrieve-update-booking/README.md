@@ -1,0 +1,1 @@
+scenario.js is a simple example of retrieving and cancelling a booking
