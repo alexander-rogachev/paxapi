@@ -1,0 +1,1 @@
+scenario.js is a simple example of creating a booking security info and retrieving it by id
