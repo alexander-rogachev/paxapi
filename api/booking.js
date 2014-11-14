@@ -71,7 +71,7 @@ module.exports = function (params) {
             throw new Error(result.response.statusCode + " - Something went wrong... :-(");
         }
         return result.data;
-    }
+    };
 
 
     module.postSync = function (bxml) {

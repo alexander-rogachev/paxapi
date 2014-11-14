@@ -13,8 +13,10 @@ bookingApi = require('./booking.js')
   apikey: apikey.getSync(),
   baseUrl: 'http://trigada.paxport.se:8080/openpax2-api/rest'
 
-
 class Booking
+  constructor: (input) ->
+#    todo: new generates fake data if data doesn't come as parameters
+
   @get: (id)->
     json = bookingApi.getSync id
     result = new Booking()
@@ -23,6 +25,7 @@ class Booking
 
   json: {}
 
+#  todo: create should just persist the booking (the booking is created by new)
   create: ->
     raw = fs.readFileSync('scenarios/create-retrieve-booking/booking.xml', { encoding: 'UTF8' });
     person = generatePerson.get();
@@ -41,8 +44,8 @@ execFunction =  ->
   booking = Booking.get '28491570'
   console.log(util.inspect(booking, { showHidden: true, depth: null }));
 
-  bookingForCreate = new Booking()
-  id = bookingForCreate.create()
+  bookingToCreate = new Booking()
+  id = bookingToCreate.create()
   console.log(id)
 
   console.log(booking.passengers())
