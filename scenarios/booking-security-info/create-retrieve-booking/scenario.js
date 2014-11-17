@@ -5,10 +5,10 @@ var pd = require('pretty-data').pd;
 var colors = require('colors');
 var js2xmlparser = require("js2xmlparser");
 
-var apikey = require('./../../util/_apikey');
-var bonogen = require('./../../util/_bonogen');
-var generatePerson = require('./../../util/_generatePerson');
-var b = require('./../../api/booking')(
+var apikey = require('./../../../util/_apikey');
+var bonogen = require('./../../../util/_bonogen');
+var generatePerson = require('./../../../util/_generatePerson');
+var b = require('./../../../api/booking')(
   {
     client: new Client(),
     verbose: true,
@@ -25,7 +25,7 @@ var b = require('./../../api/booking')(
  */
 
 console.log('Wanna create a booking?'.blue);
-var raw = fs.readFileSync(__dirname + '/booking.xml', { encoding: 'UTF8' });
+var raw = fs.readFileSync(__dirname + '/booking_without_apis.xml', { encoding: 'UTF8' });
 //var raw = js2xmlparser("mes:Booking", fs.readFileSync(__dirname + '/booking.json', { encoding: 'UTF8' }));
 var bono = bonogen.bonogen(7);
 var person = generatePerson.get();

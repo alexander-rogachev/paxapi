@@ -1,0 +1,64 @@
+{
+  "@": {
+    "xmlns:mes": "http://api.paxport.se/openpax/messages",
+    "xmlns:typ": "http://api.paxport.se/openpax/types"
+   },
+    "typ:BookingNumber": "${bono}",
+    "typ:CarrierCode": "BLX",
+    "typ:TourOperatorName": "Fritidsresor",
+    "typ:TourOperatorCode": "FRI",
+    "typ:FlightList": {
+      "typ:Flight": {
+        "typ:FlightId": {
+          "typ:CarrierCode": "BLX",
+          "typ:FlightNumber": "BLX111",
+          "typ:DepartureDateTime": "2014-12-01T07:45:00Z"
+        },
+        "typ:DepartureAirport": { "typ:Code": "ARN" },
+        "typ:ArrivalTime": "2014-12-01T10:45:00Z",
+        "typ:ArrivalAirport": { "typ:Code": "BKK" },
+        "typ:CabinClass": "C"
+      }
+    },
+    "typ:PassengerList": {
+      "typ:Passenger": {
+        "typ:FirstName": "Alex",
+        "typ:LastName": "Rogachev",
+        "typ:Category": "adult",
+        "typ:Age": "30",
+        "typ:Gender": "male",
+        "typ:ApisInfo": {
+          "typ:TravelDocumentList": {
+            "typ:TravelDocument": {
+              "typ:TravelDocumentType": "P",
+              "typ:TravelDocumentNumber": "36247",
+              "typ:TravelDocumentIssuingCountry": "RUS",
+              "typ:PassengerNationality": "RUS",
+              "typ:DateOfBirth": "1984-12-14",
+              "typ:TravelDocumentExpiryDate": "2015-12-14",
+              "typ:TravelDocumentFirstGivenName": "Alex",
+              "typ:TravelDocumentSecondGivenName": "HGH",
+              "typ:TravelDocumentLastName": "Rogachev",
+              "typ:GenderCode": "M"
+            }
+          },
+          "typ:ResidenceAddress": {
+            "typ:CountryCode": "RUS",
+            "typ:State": "YU",
+            "typ:City": "IZHEVSK",
+            "typ:Street": "LENINA",
+            "typ:PostalCode": "1234678"
+          },
+          "typ:DestinationAddress": {
+            "typ:CountryCode": "RUS",
+            "typ:State": "UIU",
+            "typ:City": "IZHEVSK",
+            "typ:Street": "LENINA",
+            "typ:PostalCode": "2764723"
+          },
+          "typ:RedressNumber": "3827648",
+          "typ:KnownTravelerNumber": "28748"
+        }
+      }
+    }
+  }
