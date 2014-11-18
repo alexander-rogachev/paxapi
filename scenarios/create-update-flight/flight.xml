@@ -1,24 +1,24 @@
 <?xml version='1.0' encoding='utf-8'?>
-<mes:FlightSchedule xmlns:mes="http://api.paxport.se/openpax/messages" xmlns:typ="http://api.paxport.se/openpax/types">
-    <typ:FlightNumber>${flno}</typ:FlightNumber>
-    <typ:SegmentList>
-        <typ:Segment>
-            <typ:FlightId>
-                <typ:CarrierCode>${prefix}</typ:CarrierCode>
-                <typ:FlightNumber>${flno}</typ:FlightNumber>
-                <typ:DepartureDateTime>${dep_datetime}</typ:DepartureDateTime>
-                <typ:DepartureAirportCode>ARN</typ:DepartureAirportCode>
-            </typ:FlightId>
-            <typ:DepartureAirport>
-                <typ:Code>ARN</typ:Code>
-            </typ:DepartureAirport>
-            <typ:ArrivalTime>2014-12-01T10:45:00Z</typ:ArrivalTime>
-            <typ:ArrivalAirport>
-                <typ:Code>BKK</typ:Code>
-            </typ:ArrivalAirport>
-        </typ:Segment>
-    </typ:SegmentList>
-    <typ:ServiceType>C</typ:ServiceType>
-    <typ:AircraftType>76W</typ:AircraftType>
-    <typ:AircraftConfiguration>Y291</typ:AircraftConfiguration>
-</mes:FlightSchedule>
+<ns2:FlightSchedule xmlns:ns2="http://api.paxport.se/openpax/messages" xmlns="http://api.paxport.se/openpax/types">
+    <FlightNumber>${flno}</FlightNumber>
+    <SegmentList>
+        <Segment>
+            <FlightId>
+                <CarrierCode>${prefix}</CarrierCode>
+                <FlightNumber>${flno}</FlightNumber>
+                <DepartureDateTime>${dep_datetime}</DepartureDateTime>
+                <DepartureAirportCode>ARN</DepartureAirportCode>
+            </FlightId>
+            <DepartureAirport>
+                <Code>ARN</Code>
+            </DepartureAirport>
+            <ArrivalTime>2014-12-01T10:45:00Z</ArrivalTime>
+            <ArrivalAirport>
+                <Code>BKK</Code>
+            </ArrivalAirport>
+        </Segment>
+    </SegmentList>
+    <ServiceType>C</ServiceType>
+    <AircraftType>76W</AircraftType>
+    <AircraftConfiguration>Y291</AircraftConfiguration>
+</ns2:FlightSchedule>
