@@ -1,5 +1,6 @@
 var Client = require('node-rest-client').Client;
 
+var properties = require('./../../util/_properties');
 var apikey = require('./../../util/_apikey');
 
 var bb = require('./../../api/bookings')(
@@ -7,7 +8,7 @@ var bb = require('./../../api/bookings')(
         client: new Client(),
         verbose: true, // todo: get verbose from command line args (process.argv[] array contains those) - default true
         apikey: apikey.getSync(),
-        baseUrl: 'http://trigada.paxport.se:8080/openpax2-api/rest'
+        baseUrl: properties.getBaseUrl
     }
 );
 

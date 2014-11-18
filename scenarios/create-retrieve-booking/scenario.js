@@ -5,6 +5,7 @@ var pd = require('pretty-data').pd;
 var colors = require('colors');
 var js2xmlparser = require("js2xmlparser");
 
+var properties = require('./../../util/_properties');
 var apikey = require('./../../util/_apikey');
 var bonogen = require('./../../util/_bonogen');
 var generatePerson = require('./../../util/_generatePerson');
@@ -13,7 +14,7 @@ var b = require('./../../api/booking')(
     client: new Client(),
     verbose: true,
     apikey: apikey.getSync(),
-    baseUrl: 'http://trigada.paxport.se:8080/openpax2-api/rest'
+    baseUrl: properties.getBaseUrl
   }
 );
 
