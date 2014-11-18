@@ -72,8 +72,8 @@ class Booking
     return bookingApi.deleteSync(bid)
 
   @create: (booking) ->
-#    if booking.id != null
-#      throw new Error("Error. You can't create this booking because ID isn't null")
+    if booking.id != null
+      throw new Error("Error. You can't create this booking because ID isn't null")
     return bookingApi.postSync(booking.toXML())
 
   @update: (booking) ->
@@ -85,11 +85,6 @@ class Booking
   json: {}
 
   toXML: ->
-    if @id == null
-      js2xmlparser("mes:Booking", @json["mes:Booking"],  {attributeString:"$"})
-    else
-      @json["ns2:Booking"]["$"]["xmlns:mes"] = 'http://api.paxport.se/openpax/messages'
-      delete @json["ns2:Booking"]["$"]["xmlns:ns2"]
       js2xmlparser("ns2:Booking", @json["ns2:Booking"], {attributeString:"$"})
 
   passengers: ->
@@ -97,58 +92,19 @@ class Booking
 
 
 execFunction = ->
-  booking = new Booking()
   booking = new Booking({passengerName: 'MyName', passengerSurname: 'Vasya'})
-#  console.log(booking.xml);
-#  console.log("*************");
-#  console.log(js2xmlparser("mes:Booking", booking.json["mes:Booking"], {attributeString:"$"}));
 
-  id = Booking.create(booking)
-  console.log(id)
+  id = Booking.create booking
 
-  booking2 = Booking.get id
-  Booking.create(booking2)
-###
-#  console.log(util.inspect(booking2, { showHidden: true, depth: null }));
-  console.log(booking2.json["ns2:Booking"]["BookingNumber"])
-  booking2.json["ns2:Booking"]["BookingNumber"] = "P0101S5"
+  booking = Booking.get(id)
+  console.log(booking.json["ns2:Booking"]["PassengerList"][0]["Passenger"][0]["FirstName"][0])
+  booking.json["ns2:Booking"]["PassengerList"][0]["Passenger"][0]["FirstName"][0] = 'Alesha123'
+  Booking.update booking
 
-  Booking.update(booking2)
-  booking2 = Booking.get id
-  console.log(booking2.json["ns2:Booking"]["BookingNumber"])
-  ###
-#  booking2 = Booking.get 28491675
-#  console.log(booking2);
-#
-#  console.log("-------------------")
-#  console.log(booking2.json);
-#  console.log(booking2.json["ns2:Booking"]["$"]["xmlns:ns2"]);
-#  booking2.json["ns2:Booking"]["$"]["xmlns:mes"] = 'http://api.paxport.se/openpax/messages'
-#  delete booking2.json["ns2:Booking"]["$"]["xmlns:ns2"]
-#  console.log booking2.json
-#
-#  xmlGet = js2xmlparser("mes:Booking", booking2.json["ns2:Booking"], {attributeString:"$"})
-#
-#  console.log(xmlGet);
-#
-#  booking2.xml = xmlGet
-#  Booking.create(booking2)
+  booking = Booking.get(id)
+  console.log(booking.json["ns2:Booking"]["PassengerList"][0]["Passenger"][0]["FirstName"][0])
 
-#  console.log(new2)
-#  bb = new2["ns2:Booking"]
-#  cc = js2xmlparser("aaa", new2["ns2:Booking"],  {attributeString:"$"})
-#  console.log(bb)
-#  console.log(js2xmlparser("mes:Booking", new2["ns2:Booking"],  {attributeString:"$"}))
-#  booking2.xml = js2xmlparser("mes:Booking", new2["ns2:Booking"],  {attributeString:"$"})
-#  console.log(booking2.xml)
-#  Booking.create(new2)
-
-
-
-#  booking2 = Booking.get(id)
-#  console.log(util.inspect(booking2, { showHidden: false, depth: null }));
-#
-#  Booking.delete(id)
+  Booking.delete id
 
 
 wait.launchFiber execFunction;
