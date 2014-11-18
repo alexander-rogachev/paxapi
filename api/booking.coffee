@@ -64,51 +64,79 @@ class Booking
     json = bookingApi.getSync id
     result = new Booking()
     result.json = json
+    result.id = id
     return result
 
   @delete: (bid)->
     return bookingApi.deleteSync(bid)
 
-
   @create: (booking) ->
-    return bookingApi.postSync(booking.xml)
+#    if booking.id != null
+#      throw new Error("Error. You can't create this booking because ID isn't null")
+    return bookingApi.postSync(booking.toXML())
 
-  @update: (id, booking) ->
-    return bookingApi.putSync(id, booking.toXML())
+  @update: (booking) ->
+    if booking.id == null
+      throw new Error("Error. ID is null")
+    return bookingApi.putSync(booking.id, booking.toXML())
 
+  id: null
   json: {}
-  xml: {}
-#  TODO need parse from json to xml
+
   toXML: ->
-    js2xmlparser("mes:Booking", @json["mes:Booking"],  {attributeString:"$"})
+    if @id == null
+      js2xmlparser("mes:Booking", @json["mes:Booking"],  {attributeString:"$"})
+    else
+      @json["ns2:Booking"]["$"]["xmlns:mes"] = 'http://api.paxport.se/openpax/messages'
+      delete @json["ns2:Booking"]["$"]["xmlns:ns2"]
+      js2xmlparser("ns2:Booking", @json["ns2:Booking"], {attributeString:"$"})
 
   passengers: ->
     @json["ns2:Booking"]["PassengerList"]
 
 
 execFunction = ->
-#  booking = new Booking()
-#  booking = new Booking({passengerName: 'MyName', passengerSurname: 'Vasya'})
-#  console.log(util.inspect(booking, { showHidden: false, depth: null }));
-#
+  booking = new Booking()
+  booking = new Booking({passengerName: 'MyName', passengerSurname: 'Vasya'})
+#  console.log(booking.xml);
 #  console.log("*************");
 #  console.log(js2xmlparser("mes:Booking", booking.json["mes:Booking"], {attributeString:"$"}));
-#
-#  id = Booking.create(booking)
-#  console.log(id)
-#
-  booking2 = Booking.get 28491675
-  console.log(booking2);
 
-  console.log("-------------------")
-  console.log(booking2.json);
-  new2 = JSON.stringify(booking2.json)
+  id = Booking.create(booking)
+  console.log(id)
 
-  console.log(js2xmlparser("person", new2));
-  console.log(new2)
-  bb = new2["ns2:Booking"]
+  booking2 = Booking.get id
+  Booking.create(booking2)
+###
+#  console.log(util.inspect(booking2, { showHidden: true, depth: null }));
+  console.log(booking2.json["ns2:Booking"]["BookingNumber"])
+  booking2.json["ns2:Booking"]["BookingNumber"] = "P0101S5"
+
+  Booking.update(booking2)
+  booking2 = Booking.get id
+  console.log(booking2.json["ns2:Booking"]["BookingNumber"])
+  ###
+#  booking2 = Booking.get 28491675
+#  console.log(booking2);
+#
+#  console.log("-------------------")
+#  console.log(booking2.json);
+#  console.log(booking2.json["ns2:Booking"]["$"]["xmlns:ns2"]);
+#  booking2.json["ns2:Booking"]["$"]["xmlns:mes"] = 'http://api.paxport.se/openpax/messages'
+#  delete booking2.json["ns2:Booking"]["$"]["xmlns:ns2"]
+#  console.log booking2.json
+#
+#  xmlGet = js2xmlparser("mes:Booking", booking2.json["ns2:Booking"], {attributeString:"$"})
+#
+#  console.log(xmlGet);
+#
+#  booking2.xml = xmlGet
+#  Booking.create(booking2)
+
+#  console.log(new2)
+#  bb = new2["ns2:Booking"]
 #  cc = js2xmlparser("aaa", new2["ns2:Booking"],  {attributeString:"$"})
-console.log(bb)
+#  console.log(bb)
 #  console.log(js2xmlparser("mes:Booking", new2["ns2:Booking"],  {attributeString:"$"}))
 #  booking2.xml = js2xmlparser("mes:Booking", new2["ns2:Booking"],  {attributeString:"$"})
 #  console.log(booking2.xml)
