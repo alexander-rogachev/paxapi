@@ -53,10 +53,6 @@ class Booking
       expr = new RegExp('\\$\\{' + field + '\\}', "g");
       xml = xml.replace(expr, if !value.func then person[value.field] else value.func(person[value.field]))
 
-    #  todo need parse from xml to json
-    #    @json = parseXML(@xml)
-    @xml = xml
-
     parseString(xml, (err, result)=>
       @json = result
     )
@@ -68,8 +64,8 @@ class Booking
     result.id = id
     return result
 
-  @delete: (bid)->
-    return bookingApi.deleteSync(bid)
+  @delete: (id)->
+    return bookingApi.deleteSync(id)
 
   @create: (booking) ->
     if booking.id != null
@@ -78,14 +74,14 @@ class Booking
 
   @update: (booking) ->
     if booking.id == null
-      throw new Error("Error. ID is null")
+      throw new Error("Error. Object booking has id equals null")
     return bookingApi.putSync(booking.id, booking.toXML())
 
   id: null
   json: {}
 
   toXML: ->
-      js2xmlparser("ns2:Booking", @json["ns2:Booking"], {attributeString:"$"})
+    js2xmlparser("ns2:Booking", @json["ns2:Booking"], {attributeString: "$"})
 
   passengers: ->
     @json["ns2:Booking"]["PassengerList"]
