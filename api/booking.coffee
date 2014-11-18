@@ -1,4 +1,5 @@
 Client = require('node-rest-client').Client;
+properties = require('./../util/_properties');
 apikey = require('./../util/_apikey');
 bonogen = require('./../util/_bonogen');
 pd = require('pretty-data').pd;
@@ -13,7 +14,7 @@ bookingApi = require('./booking.js')
   client: new Client(),
   verbose: true,
   apikey: apikey.getSync(),
-  baseUrl: 'http://trigada.paxport.se:8080/openpax2-api/rest'
+  baseUrl: properties.getBaseUrl
 
 mappingFields =
   passengerName:

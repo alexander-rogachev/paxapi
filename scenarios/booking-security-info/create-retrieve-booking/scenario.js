@@ -3,30 +3,29 @@ var util = require('util');
 var fs = require('fs');
 var pd = require('pretty-data').pd;
 var colors = require('colors');
-var js2xmlparser = require("js2xmlparser");
 
-var apikey = require('./../../util/_apikey');
-var bonogen = require('./../../util/_bonogen');
-var generatePerson = require('./../../util/_generatePerson');
-var b = require('./../../api/booking')(
+var properties = require('./../../../util/_properties');
+var apikey = require('./../../../util/_apikey');
+var bonogen = require('./../../../util/_bonogen');
+var generatePerson = require('./../../../util/_generatePerson');
+var b = require('./../../../api/booking')(
   {
     client: new Client(),
     verbose: true,
     apikey: apikey.getSync(),
-    baseUrl: 'http://trigada.paxport.se:8080/openpax2-api/rest'
+    baseUrl: properties.getBaseUrl
   }
 );
 
 /*
-  Scenario: create and retrieve a booking
+  Scenario: create and retrieve a booking with apis info
     Given: booking is created
     When: retrieve the booking by id
     Then: booking is retrieved
  */
 
 console.log('Wanna create a booking?'.blue);
-var raw = fs.readFileSync(__dirname + '/booking.xml', { encoding: 'UTF8' });
-//var raw = js2xmlparser("mes:Booking", fs.readFileSync(__dirname + '/booking.json', { encoding: 'UTF8' }));
+var raw = fs.readFileSync(__dirname + '/booking_without_apis.xml', { encoding: 'UTF8' });
 var bono = bonogen.bonogen(7);
 var person = generatePerson.get();
 var xml = pd.xmlmin(raw).replace('${bono}', bono).replace(/\$\{passengerName\}/g, person.firstName).replace(/\$\{passengerSurname\}/g, person.lastName).replace('${genderCode}', person.sex.charAt(0).toUpperCase())

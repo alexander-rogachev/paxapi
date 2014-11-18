@@ -16,10 +16,10 @@ var f = require('./../../api/flight')(
 );
 
 /*
-  Scenario: create and retrieve a flight
-    Given: booking is created
-    When: retrieve the booking by id
-    Then: booking is retrieved
+ Scenario: create and update a flight
+ Given: flight is created
+ When: update the flight by id
+ Then: flight is updated
  */
 
 console.log('Wanna create a flight?'.blue);
@@ -28,6 +28,11 @@ var prefix = 'TST';
 var flno = flnogen.flnogen(3, prefix);
 var dep_datetime = '2014-12-01T07:45:00Z';
 var xml = pd.xmlmin(raw).replace('${flno}', flno).replace('${prefix}', prefix).replace('${dep_datetime}', dep_datetime);
+
+var dep_datetime = '2014-12-01T15:45:00Z';
+var xml_update = pd.xmlmin(raw).replace('${flno}', flno).replace('${prefix}', prefix).replace('${dep_datetime}', dep_datetime);
+
+
 f.post(xml)
   .then(
     function(data) {
@@ -41,14 +46,24 @@ f.post(xml)
 
       console.log("Let's make sure it's there!!".blue);
       f.get(data).then(
-        function(data) {
-          console.log("It's there!".green);
-          console.log(util.inspect(data, { showHidden: true, depth: null }));
-        },
-        console.log
+          function(data) {
+            console.log("It's there!".green);
+            console.log(util.inspect(data, { showHidden: true, depth: null }));
+            f.put(flid.id, xml_update)
+                .then(
+                function(data) {
+                  console.log('Updated!'.green);
+                  f.get(flid.id).then(
+                      function(data) {
+                        console.log("Updated booking's there!".green);
+                        console.log(util.inspect(data, { showHidden: true, depth: null }));
+                      })
+                })
+          },
+          console.log
       );
-   })
-  .fail(function(err) {
-    console.log(err.red);
-  })
+    })
+    .fail(function(err) {
+      console.log(err.red);
+    })
 ;
