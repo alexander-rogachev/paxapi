@@ -30,66 +30,6 @@
             <typ:Category>adult</typ:Category>
             <typ:Age>30</typ:Age>
             <typ:Gender>${sex}</typ:Gender>
-            <!-- todo: remove APIS information from this simple scenario; APIS will be used in booking-security-info scenarios -->
-            <typ:ApisInfo>
-                <!--Optional:-->
-                <typ:TravelDocumentList>
-                    <!--Zero or more repetitions:-->
-                    <typ:TravelDocument>
-                        <!--Optional:-->
-                        <typ:TravelDocumentType>P</typ:TravelDocumentType>
-                        <!--Optional:-->
-                        <typ:TravelDocumentNumber>36247</typ:TravelDocumentNumber>
-                        <!--Optional:-->
-                        <typ:TravelDocumentIssuingCountry>US</typ:TravelDocumentIssuingCountry>
-                        <!--Optional:-->
-                        <typ:PassengerNationality>RUS</typ:PassengerNationality>
-                        <!--Optional:-->
-                        <typ:DateOfBirth>1984-12-14</typ:DateOfBirth>
-                        <!--Optional:-->
-                        <typ:TravelDocumentExpiryDate>2015-12-14</typ:TravelDocumentExpiryDate>
-                        <!--Optional:-->
-                        <typ:TravelDocumentFirstGivenName>${passengerName}</typ:TravelDocumentFirstGivenName>
-                        <!--Optional:-->
-                        <typ:TravelDocumentSecondGivenName>HGH</typ:TravelDocumentSecondGivenName>
-                        <!--Optional:-->
-                        <typ:TravelDocumentLastName>${passengerSurname}</typ:TravelDocumentLastName>
-                        <!--Optional:-->
-                        <typ:GenderCode>${genderCode}</typ:GenderCode>
-                    </typ:TravelDocument>
-                </typ:TravelDocumentList>
-                <!--Optional:-->
-                <typ:ResidenceAddress>
-                    <!--Optional:-->
-                    <typ:CountryCode>US</typ:CountryCode>
-                    <!--Optional:-->
-                    <typ:State>${state}</typ:State>
-                    <!--Optional:-->
-                    <typ:City>${city}</typ:City>
-                    <!--Optional:-->
-                    <typ:Street>${street}</typ:Street>
-                    <!--Optional:-->
-                    <typ:PostalCode>${zipCode}</typ:PostalCode>
-                </typ:ResidenceAddress>
-                <!--Optional:-->
-                <typ:DestinationAddress>
-                    <!--Optional:-->
-                    <typ:CountryCode>US</typ:CountryCode>
-                    <!--Optional:-->
-                    <typ:State>${state}</typ:State>
-                    <!--Optional:-->
-                    <typ:City>${city}</typ:City>
-                    <!--Optional:-->
-                    <typ:Street>${street}</typ:Street>
-                    <!--Optional:-->
-                    <typ:PostalCode>${zipCode}</typ:PostalCode>
-                </typ:DestinationAddress>
-                <!--Optional:-->
-                <typ:RedressNumber>3827648</typ:RedressNumber>
-                <!--Optional:-->
-                <typ:KnownTravelerNumber>28748</typ:KnownTravelerNumber>
-                <!--Optional:<typ:TopUniqueId></typ:TopUniqueId>-->
-            </typ:ApisInfo>
         </typ:Passenger>
     </typ:PassengerList>
 </mes:Booking>
