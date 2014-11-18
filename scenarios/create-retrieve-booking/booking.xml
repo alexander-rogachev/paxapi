@@ -1,95 +1,95 @@
 <?xml version='1.0' encoding='utf-8'?>
-<mes:Booking xmlns:mes="http://api.paxport.se/openpax/messages" xmlns:typ="http://api.paxport.se/openpax/types">
-    <typ:BookingNumber>${bono}</typ:BookingNumber>
-    <typ:CarrierCode>TST</typ:CarrierCode>
-    <typ:TourOperatorName>Test</typ:TourOperatorName>
-    <typ:TourOperatorCode>TTT</typ:TourOperatorCode>
+<ns2:Booking xmlns:ns2="http://api.paxport.se/openpax/messages" xmlns="http://api.paxport.se/openpax/types">
+    <BookingNumber>${bono}</BookingNumber>
+    <CarrierCode>TST</CarrierCode>
+    <TourOperatorName>Test</TourOperatorName>
+    <TourOperatorCode>TTT</TourOperatorCode>
     <!-- todo: make it a out and in booking - most frequent case of all bookings -->
-    <typ:FlightList>
+    <FlightList>
         <!--1 or more repetitions:-->
-        <typ:Flight>
-            <typ:FlightId>
-                <typ:CarrierCode>TST</typ:CarrierCode>
-                <typ:FlightNumber>TST111</typ:FlightNumber>
-                <typ:DepartureDateTime>2014-12-01T07:45:00Z</typ:DepartureDateTime>
-            </typ:FlightId>
-            <typ:DepartureAirport>
-                <typ:Code>ARN</typ:Code>
-            </typ:DepartureAirport>
-            <typ:ArrivalTime>2014-12-01T10:45:00Z</typ:ArrivalTime>
-            <typ:ArrivalAirport>
-                <typ:Code>BKK</typ:Code>
-            </typ:ArrivalAirport>
-            <typ:CabinClass>C</typ:CabinClass>
-        </typ:Flight>
-    </typ:FlightList>
-    <typ:PassengerList>
-        <typ:Passenger>
-            <typ:FirstName>${passengerName}</typ:FirstName>
-            <typ:LastName>${passengerSurname}</typ:LastName>
-            <typ:Category>adult</typ:Category>
-            <typ:Age>30</typ:Age>
-            <typ:Gender>${sex}</typ:Gender>
+        <Flight>
+            <FlightId>
+                <CarrierCode>TST</CarrierCode>
+                <FlightNumber>TST111</FlightNumber>
+                <DepartureDateTime>2014-12-01T07:45:00Z</DepartureDateTime>
+            </FlightId>
+            <DepartureAirport>
+                <Code>ARN</Code>
+            </DepartureAirport>
+            <ArrivalTime>2014-12-01T10:45:00Z</ArrivalTime>
+            <ArrivalAirport>
+                <Code>BKK</Code>
+            </ArrivalAirport>
+            <CabinClass>C</CabinClass>
+        </Flight>
+    </FlightList>
+    <PassengerList>
+        <Passenger>
+            <FirstName>${passengerName}</FirstName>
+            <LastName>${passengerSurname}</LastName>
+            <Category>adult</Category>
+            <Age>30</Age>
+            <Gender>${sex}</Gender>
             <!-- todo: remove APIS information from this simple scenario; APIS will be used in booking-security-info scenarios -->
-            <typ:ApisInfo>
+            <ApisInfo>
                 <!--Optional:-->
-                <typ:TravelDocumentList>
+                <TravelDocumentList>
                     <!--Zero or more repetitions:-->
-                    <typ:TravelDocument>
+                    <TravelDocument>
                         <!--Optional:-->
-                        <typ:TravelDocumentType>P</typ:TravelDocumentType>
+                        <TravelDocumentType>P</TravelDocumentType>
                         <!--Optional:-->
-                        <typ:TravelDocumentNumber>36247</typ:TravelDocumentNumber>
+                        <TravelDocumentNumber>36247</TravelDocumentNumber>
                         <!--Optional:-->
-                        <typ:TravelDocumentIssuingCountry>US</typ:TravelDocumentIssuingCountry>
+                        <TravelDocumentIssuingCountry>US</TravelDocumentIssuingCountry>
                         <!--Optional:-->
-                        <typ:PassengerNationality>RUS</typ:PassengerNationality>
+                        <PassengerNationality>RUS</PassengerNationality>
                         <!--Optional:-->
-                        <typ:DateOfBirth>1984-12-14</typ:DateOfBirth>
+                        <DateOfBirth>1984-12-14</DateOfBirth>
                         <!--Optional:-->
-                        <typ:TravelDocumentExpiryDate>2015-12-14</typ:TravelDocumentExpiryDate>
+                        <TravelDocumentExpiryDate>2015-12-14</TravelDocumentExpiryDate>
                         <!--Optional:-->
-                        <typ:TravelDocumentFirstGivenName>${passengerName}</typ:TravelDocumentFirstGivenName>
+                        <TravelDocumentFirstGivenName>${passengerName}</TravelDocumentFirstGivenName>
                         <!--Optional:-->
-                        <typ:TravelDocumentSecondGivenName>HGH</typ:TravelDocumentSecondGivenName>
+                        <TravelDocumentSecondGivenName>HGH</TravelDocumentSecondGivenName>
                         <!--Optional:-->
-                        <typ:TravelDocumentLastName>${passengerSurname}</typ:TravelDocumentLastName>
+                        <TravelDocumentLastName>${passengerSurname}</TravelDocumentLastName>
                         <!--Optional:-->
-                        <typ:GenderCode>${genderCode}</typ:GenderCode>
-                    </typ:TravelDocument>
-                </typ:TravelDocumentList>
+                        <GenderCode>${genderCode}</GenderCode>
+                    </TravelDocument>
+                </TravelDocumentList>
                 <!--Optional:-->
-                <typ:ResidenceAddress>
+                <ResidenceAddress>
                     <!--Optional:-->
-                    <typ:CountryCode>US</typ:CountryCode>
+                    <CountryCode>US</CountryCode>
                     <!--Optional:-->
-                    <typ:State>${state}</typ:State>
+                    <State>${state}</State>
                     <!--Optional:-->
-                    <typ:City>${city}</typ:City>
+                    <City>${city}</City>
                     <!--Optional:-->
-                    <typ:Street>${street}</typ:Street>
+                    <Street>${street}</Street>
                     <!--Optional:-->
-                    <typ:PostalCode>${zipCode}</typ:PostalCode>
-                </typ:ResidenceAddress>
+                    <PostalCode>${zipCode}</PostalCode>
+                </ResidenceAddress>
                 <!--Optional:-->
-                <typ:DestinationAddress>
+                <DestinationAddress>
                     <!--Optional:-->
-                    <typ:CountryCode>US</typ:CountryCode>
+                    <CountryCode>US</CountryCode>
                     <!--Optional:-->
-                    <typ:State>${state}</typ:State>
+                    <State>${state}</State>
                     <!--Optional:-->
-                    <typ:City>${city}</typ:City>
+                    <City>${city}</City>
                     <!--Optional:-->
-                    <typ:Street>${street}</typ:Street>
+                    <Street>${street}</Street>
                     <!--Optional:-->
-                    <typ:PostalCode>${zipCode}</typ:PostalCode>
-                </typ:DestinationAddress>
+                    <PostalCode>${zipCode}</PostalCode>
+                </DestinationAddress>
                 <!--Optional:-->
-                <typ:RedressNumber>3827648</typ:RedressNumber>
+                <RedressNumber>3827648</RedressNumber>
                 <!--Optional:-->
-                <typ:KnownTravelerNumber>28748</typ:KnownTravelerNumber>
-                <!--Optional:<typ:TopUniqueId></typ:TopUniqueId>-->
-            </typ:ApisInfo>
-        </typ:Passenger>
-    </typ:PassengerList>
-</mes:Booking>
+                <KnownTravelerNumber>28748</KnownTravelerNumber>
+                <!--Optional:<TopUniqueId></TopUniqueId>-->
+            </ApisInfo>
+        </Passenger>
+    </PassengerList>
+</ns2:Booking>
