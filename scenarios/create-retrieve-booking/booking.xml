@@ -30,66 +30,6 @@
             <Category>adult</Category>
             <Age>30</Age>
             <Gender>${sex}</Gender>
-            <!-- todo: remove APIS information from this simple scenario; APIS will be used in booking-security-info scenarios -->
-            <ApisInfo>
-                <!--Optional:-->
-                <TravelDocumentList>
-                    <!--Zero or more repetitions:-->
-                    <TravelDocument>
-                        <!--Optional:-->
-                        <TravelDocumentType>P</TravelDocumentType>
-                        <!--Optional:-->
-                        <TravelDocumentNumber>36247</TravelDocumentNumber>
-                        <!--Optional:-->
-                        <TravelDocumentIssuingCountry>US</TravelDocumentIssuingCountry>
-                        <!--Optional:-->
-                        <PassengerNationality>RUS</PassengerNationality>
-                        <!--Optional:-->
-                        <DateOfBirth>1984-12-14</DateOfBirth>
-                        <!--Optional:-->
-                        <TravelDocumentExpiryDate>2015-12-14</TravelDocumentExpiryDate>
-                        <!--Optional:-->
-                        <TravelDocumentFirstGivenName>${passengerName}</TravelDocumentFirstGivenName>
-                        <!--Optional:-->
-                        <TravelDocumentSecondGivenName>HGH</TravelDocumentSecondGivenName>
-                        <!--Optional:-->
-                        <TravelDocumentLastName>${passengerSurname}</TravelDocumentLastName>
-                        <!--Optional:-->
-                        <GenderCode>${genderCode}</GenderCode>
-                    </TravelDocument>
-                </TravelDocumentList>
-                <!--Optional:-->
-                <ResidenceAddress>
-                    <!--Optional:-->
-                    <CountryCode>US</CountryCode>
-                    <!--Optional:-->
-                    <State>${state}</State>
-                    <!--Optional:-->
-                    <City>${city}</City>
-                    <!--Optional:-->
-                    <Street>${street}</Street>
-                    <!--Optional:-->
-                    <PostalCode>${zipCode}</PostalCode>
-                </ResidenceAddress>
-                <!--Optional:-->
-                <DestinationAddress>
-                    <!--Optional:-->
-                    <CountryCode>US</CountryCode>
-                    <!--Optional:-->
-                    <State>${state}</State>
-                    <!--Optional:-->
-                    <City>${city}</City>
-                    <!--Optional:-->
-                    <Street>${street}</Street>
-                    <!--Optional:-->
-                    <PostalCode>${zipCode}</PostalCode>
-                </DestinationAddress>
-                <!--Optional:-->
-                <RedressNumber>3827648</RedressNumber>
-                <!--Optional:-->
-                <KnownTravelerNumber>28748</KnownTravelerNumber>
-                <!--Optional:<TopUniqueId></TopUniqueId>-->
-            </ApisInfo>
         </Passenger>
     </PassengerList>
 </ns2:Booking>
