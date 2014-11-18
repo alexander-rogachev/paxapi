@@ -7,6 +7,8 @@ fs = require('fs');
 util = require('util');
 wait = require('wait.for');
 generatePerson = require('./../util/_generatePerson');
+parseString = require('xml2js').parseString;
+js2xmlparser = require("js2xmlparser");
 
 bookingApi = require('./booking.js')
   client: new Client(),
@@ -14,46 +16,98 @@ bookingApi = require('./booking.js')
   apikey: apikey.getSync(),
   baseUrl: properties.getBaseUrl
 
+mappingFields =
+  passengerName:
+    field: 'firstName'
+  passengerSurname:
+    field: 'lastName'
+  genderCode:
+    field: 'sex'
+    func: (value)->
+      value.charAt(0).toUpperCase()
+  sex:
+    field: 'sex'
+  street:
+    field: 'street'
+  city:
+    field: 'city'
+  state:
+    field: 'state'
+  zipCode:
+    field: 'zipCpde'
+
 class Booking
-  constructor: (input) ->
-#    todo: new generates fake data if data doesn't come as parameters
+
+  constructor: (input = null) ->
+    raw = fs.readFileSync('scenarios/create-retrieve-booking/booking.xml', { encoding: 'UTF8' });
+    person = generatePerson.get();
+    bono = bonogen.bonogen(7);
+    xml = pd.xmlmin(raw).replace('${bono}', bono)
+
+    if input
+      for field, value of input
+        expr = new RegExp('\\$\\{' + field + '\\}', "g");
+        xml = xml.replace(expr, value)
+
+    for field, value of mappingFields
+      expr = new RegExp('\\$\\{' + field + '\\}', "g");
+      xml = xml.replace(expr, if !value.func then person[value.field] else value.func(person[value.field]))
+
+    #  todo need parse from xml to json
+    #    @json = parseXML(@xml)
+    @xml = xml
+
+    parseString(xml, (err, result)=>
+      @json = result
+    )
 
   @get: (id)->
     json = bookingApi.getSync id
     result = new Booking()
     result.json = json
+    result.id = id
     return result
 
+  @delete: (bid)->
+    return bookingApi.deleteSync(bid)
+
+  @create: (booking) ->
+    if booking.id != null
+      throw new Error("Error. You can't create this booking because ID isn't null")
+    return bookingApi.postSync(booking.toXML())
+
+  @update: (booking) ->
+    if booking.id == null
+      throw new Error("Error. ID is null")
+    return bookingApi.putSync(booking.id, booking.toXML())
+
+  id: null
   json: {}
 
-#  todo: create should just persist the booking (the booking is created by new)
-  create: ->
-    raw = fs.readFileSync('scenarios/create-retrieve-booking/booking.xml', { encoding: 'UTF8' });
-    person = generatePerson.get();
-    bono = bonogen.bonogen(7);
-    xml = pd.xmlmin(raw).replace('${bono}', bono).replace(/\$\{passengerName\}/g, person.firstName).replace(/\$\{passengerSurname\}/g, person.lastName).replace('${genderCode}', person.sex.charAt(0).toUpperCase())
-      .replace(/\$\{sex\}/g, person.sex).replace(/\$\{street\}/g, person.street).replace(/\$\{city\}/g, person.city).replace(/\$\{state\}/g, person['state']).replace(/\$\{zipCode\}/g, person.zipCode);
-
-    #    todo need replace data in xml from json
-    return bookingApi.postSync(xml)
+  toXML: ->
+      js2xmlparser("ns2:Booking", @json["ns2:Booking"], {attributeString:"$"})
 
   passengers: ->
     @json["ns2:Booking"]["PassengerList"]
 
 
-execFunction =  ->
-  booking = Booking.get '28491570'
-  console.log(util.inspect(booking, { showHidden: true, depth: null }));
+execFunction = ->
+  booking = new Booking({passengerName: 'MyName', passengerSurname: 'Vasya'})
 
-  bookingToCreate = new Booking()
-  id = bookingToCreate.create()
-  console.log(id)
+  id = Booking.create booking
 
-  console.log(booking.passengers())
+  booking = Booking.get(id)
+  console.log(booking.json["ns2:Booking"]["PassengerList"][0]["Passenger"][0]["FirstName"][0])
+  booking.json["ns2:Booking"]["PassengerList"][0]["Passenger"][0]["FirstName"][0] = 'Alesha123'
+  Booking.update booking
+
+  booking = Booking.get(id)
+  console.log(booking.json["ns2:Booking"]["PassengerList"][0]["Passenger"][0]["FirstName"][0])
+
+  Booking.delete id
+
 
 wait.launchFiber execFunction;
-
-
 
 
 

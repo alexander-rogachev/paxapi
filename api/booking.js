@@ -25,7 +25,17 @@ module.exports = function (params) {
     });
   };
 
+    module.client.qDelete = function (url, args, stdCallback) {
+        this.delete(url, args, function (data, response) {
+            return stdCallback(null, {data: data, response: response});
+        });
+    };
 
+    module.client.qPut = function (url, args, stdCallback) {
+        this.put(url, args, function (data, response) {
+            return stdCallback(null, {data: data, response: response});
+        });
+    };
 
   /*
    GET /bookings/{bookingId}/detail
@@ -183,6 +193,46 @@ module.exports = function (params) {
       });
 
     });
+    };
+
+
+    module.deleteSync = function (bid) {
+        var args = {
+            headers: { "Content-Type": "application/xml", "Authorization": 'Basic ' + module.apikey}
+        };
+        var url = module.baseUrl + '/bookings/' + bid + '/';
+        if (module.verbose) {
+            console.log('DELETE ' + url + ' ...');
+        }
+        var result = wait.forMethod(module.client, "qDelete", url, args);
+
+        if (result.response.statusCode === 401) {
+            throw new Error("401 - API key required");
+        } else if (result.response.statusCode === 404) {
+            throw new Error("404 - Booking not found");
+        } else if (result.response.statusCode !== 200) {
+            throw new Error(" - Something went wrong... :-(");
+        }
+        return result;
+    };
+
+    module.putSync = function (bid, bxml) {
+        var args = {
+            data: bxml,
+            headers: { "Content-Type": "application/xml", "Authorization": 'Basic ' + module.apikey }
+        };
+        var url = module.baseUrl + '/bookings/' + bid + '/';
+        if (module.verbose) {
+            console.log('PUT ' + url + ' with XML ...');
+        }
+        var result = wait.forMethod(module.client, "qPut", url, args);
+
+        if (result.response.statusCode === 401) {
+            throw new Error("401 - API key required");
+        } else if (result.response.statusCode !== 200) {
+            throw new Error(result.response.statusCode + " - Something went wrong... :-(");
+        }
+        return result;
   };
 
   return module;
