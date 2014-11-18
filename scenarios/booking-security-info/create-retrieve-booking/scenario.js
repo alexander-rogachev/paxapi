@@ -24,7 +24,7 @@ var b = require('./../../../api/booking')(
  */
 
 console.log('Wanna create a booking?'.blue);
-var raw = fs.readFileSync(__dirname + '/booking_without_apis.xml', { encoding: 'UTF8' });
+var raw = fs.readFileSync(__dirname + '/booking.xml', { encoding: 'UTF8' });
 var bono = bonogen.bonogen(7);
 var person = generatePerson.get();
 var xml = pd.xmlmin(raw).replace('${bono}', bono).replace(/\$\{passengerName\}/g, person.firstName).replace(/\$\{passengerSurname\}/g, person.lastName).replace('${genderCode}', person.sex.charAt(0).toUpperCase())
