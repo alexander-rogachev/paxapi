@@ -5,7 +5,6 @@ bonogen = require('./../util/_bonogen');
 pd = require('pretty-data').pd;
 fs = require('fs');
 util = require('util');
-wait = require('wait.for');
 generatePerson = require('./../util/_generatePerson');
 parseString = require('xml2js').parseString;
 js2xmlparser = require("js2xmlparser");
@@ -39,7 +38,7 @@ mappingFields =
 exports.Booking =
   class Booking
     constructor: (input = null) ->
-      raw = fs.readFileSync('scenarios/create-retrieve-booking/booking.xml', { encoding: 'UTF8' });
+      raw = fs.readFileSync(__dirname+'/../scenarios/create-retrieve-booking/booking.xml', { encoding: 'UTF8' });
       person = generatePerson.get();
       bono = bonogen.bonogen(7);
       xml = pd.xmlmin(raw).replace('${bono}', bono)
@@ -83,6 +82,21 @@ exports.Booking =
     toXML: ->
       js2xmlparser("ns2:Booking", @json["ns2:Booking"], {attributeString: "$"})
 
+#    addPassenger: (params) ->
+#      raw = fs.readFileSync(__dirname + '/scenarios/create-retrieve-booking/passenger.xml', { encoding: 'UTF8' });
+#      xmlOriginal = pd.xmlmin(raw)
+#
+#      if params?.count and params.count > 0
+#        for num in [0..params.count - 1]
+#          person = generatePerson.get();
+#          for field, value of mappingFields
+#            expr = new RegExp('\\$\\{' + field + '\\}', "g");
+#            xml = xmlOriginal.replace(expr, if !value.func then person[value.field] else value.func(person[value.field]))
+#
+#        console.log(xml)
+#        return;
+
+
     passengers: ->
       @json["ns2:Booking"]["PassengerList"]
 
@@ -104,9 +118,12 @@ exports.Booking =
 #
 #
 #wait.launchFiber execFunction;
+
+#execFunction = ->
+#  booking = new Booking({passengerName: 'MyName', passengerSurname: 'Vasya'})
+#  booking.addPassenger {count: 2}
 #
-#
-#
+#wait.launchFiber execFunction;
 
 
 
