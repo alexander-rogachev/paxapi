@@ -6,7 +6,6 @@ colors = require('colors');
 properties = require('./../util/_properties');
 apikey = require('./../util/_apikey');
 flnogen = require('./../util/_flnogen');
-wait = require('wait.for');
 parseString = require('xml2js').parseString;
 js2xmlparser = require("js2xmlparser");
 
@@ -44,7 +43,7 @@ exports.Flight =
     }
 
     constructor: (input = null)->
-      raw = fs.readFileSync('scenarios/create-retrieve-flight/flight.xml', { encoding: 'UTF8' });
+      raw = fs.readFileSync(__dirname+'/../scenarios/create-retrieve-flight/flight.xml', { encoding: 'UTF8' });
       xml = pd.xmlmin(raw)
       if input
         for field, value of input
