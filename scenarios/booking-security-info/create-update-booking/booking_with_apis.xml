@@ -4,7 +4,6 @@
     <CarrierCode>TST</CarrierCode>
     <TourOperatorName>Test</TourOperatorName>
     <TourOperatorCode>TTT</TourOperatorCode>
-    <!-- todo: make it a out and in booking - most frequent case of all bookings -->
     <FlightList>
         <!--1 or more repetitions:-->
         <Flight>
@@ -22,6 +21,22 @@
             </ArrivalAirport>
             <CabinClass>C</CabinClass>
         </Flight>
+        <Flight>
+            <FlightId>
+                <CarrierCode>TST</CarrierCode>
+                <FlightNumber>TST112</FlightNumber>
+                <DepartureDateTime>2014-12-15T10:45:00Z</DepartureDateTime>
+            </FlightId>
+            <DepartureAirport>
+                <Code>BKK</Code>
+            </DepartureAirport>
+            <ArrivalTime>2014-12-16T10:45:00Z</ArrivalTime>
+            <ArrivalAirport>
+                <Code>ARN</Code>
+            </ArrivalAirport>
+            <CabinClass>C</CabinClass>
+        </Flight>
+
     </FlightList>
     <PassengerList>
         <Passenger>
@@ -30,7 +45,6 @@
             <Category>adult</Category>
             <Age>30</Age>
             <Gender>${sex}</Gender>
-            <!-- todo: remove APIS information from this simple scenario; APIS will be used in booking-security-info scenarios -->
             <ApisInfo>
                 <!--Optional:-->
                 <TravelDocumentList>
