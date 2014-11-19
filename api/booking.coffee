@@ -36,77 +36,77 @@ mappingFields =
   zipCode:
     field: 'zipCpde'
 
-class Booking
+exports.Booking =
+  class Booking
+    constructor: (input = null) ->
+      raw = fs.readFileSync('scenarios/create-retrieve-booking/booking.xml', { encoding: 'UTF8' });
+      person = generatePerson.get();
+      bono = bonogen.bonogen(7);
+      xml = pd.xmlmin(raw).replace('${bono}', bono)
 
-  constructor: (input = null) ->
-    raw = fs.readFileSync('scenarios/create-retrieve-booking/booking.xml', { encoding: 'UTF8' });
-    person = generatePerson.get();
-    bono = bonogen.bonogen(7);
-    xml = pd.xmlmin(raw).replace('${bono}', bono)
+      if input
+        for field, value of input
+          expr = new RegExp('\\$\\{' + field + '\\}', "g");
+          xml = xml.replace(expr, value)
 
-    if input
-      for field, value of input
+      for field, value of mappingFields
         expr = new RegExp('\\$\\{' + field + '\\}', "g");
-        xml = xml.replace(expr, value)
+        xml = xml.replace(expr, if !value.func then person[value.field] else value.func(person[value.field]))
 
-    for field, value of mappingFields
-      expr = new RegExp('\\$\\{' + field + '\\}', "g");
-      xml = xml.replace(expr, if !value.func then person[value.field] else value.func(person[value.field]))
+      parseString(xml, (err, result)=>
+        @json = result
+      )
 
-    parseString(xml, (err, result)=>
-      @json = result
-    )
+    @get: (id)->
+      json = bookingApi.getSync id
+      result = new Booking()
+      result.json = json
+      result.id = id
+      return result
 
-  @get: (id)->
-    json = bookingApi.getSync id
-    result = new Booking()
-    result.json = json
-    result.id = id
-    return result
+    @delete: (id)->
+      return bookingApi.deleteSync(id)
 
-  @delete: (id)->
-    return bookingApi.deleteSync(id)
+    @create: (booking) ->
+      if booking.id != null
+        throw new Error("Error. You can't create this booking because ID isn't null")
+      return bookingApi.postSync(booking.toXML())
 
-  @create: (booking) ->
-    if booking.id != null
-      throw new Error("Error. You can't create this booking because ID isn't null")
-    return bookingApi.postSync(booking.toXML())
+    @update: (booking) ->
+      if booking.id == null
+        throw new Error("Error. Object booking has id equals null")
+      return bookingApi.putSync(booking.id, booking.toXML())
 
-  @update: (booking) ->
-    if booking.id == null
-      throw new Error("Error. Object booking has id equals null")
-    return bookingApi.putSync(booking.id, booking.toXML())
+    id: null
+    json: {}
 
-  id: null
-  json: {}
+    toXML: ->
+      js2xmlparser("ns2:Booking", @json["ns2:Booking"], {attributeString: "$"})
 
-  toXML: ->
-    js2xmlparser("ns2:Booking", @json["ns2:Booking"], {attributeString: "$"})
+    passengers: ->
+      @json["ns2:Booking"]["PassengerList"]
 
-  passengers: ->
-    @json["ns2:Booking"]["PassengerList"]
-
-
-execFunction = ->
-  booking = new Booking({passengerName: 'MyName', passengerSurname: 'Vasya'})
-
-  id = Booking.create booking
-
-  booking = Booking.get(id)
-  console.log(booking.json["ns2:Booking"]["PassengerList"][0]["Passenger"][0]["FirstName"][0])
-  booking.json["ns2:Booking"]["PassengerList"][0]["Passenger"][0]["FirstName"][0] = 'Alesha123'
-  Booking.update booking
-
-  booking = Booking.get(id)
-  console.log(booking.json["ns2:Booking"]["PassengerList"][0]["Passenger"][0]["FirstName"][0])
-
-  Booking.delete id
-
-
-wait.launchFiber execFunction;
-
-
-
+#
+#execFunction = ->
+#  booking = new Booking({passengerName: 'MyName', passengerSurname: 'Vasya'})
+#
+#  id = Booking.create booking
+#
+#  booking = Booking.get(id)
+#  console.log(booking.json["ns2:Booking"]["PassengerList"][0]["Passenger"][0]["FirstName"][0])
+#  booking.json["ns2:Booking"]["PassengerList"][0]["Passenger"][0]["FirstName"][0] = 'Alesha123'
+#  Booking.update booking
+#
+#  booking = Booking.get(id)
+#  console.log(booking.json["ns2:Booking"]["PassengerList"][0]["Passenger"][0]["FirstName"][0])
+#
+#  Booking.delete id
+#
+#
+#wait.launchFiber execFunction;
+#
+#
+#
 
 
 

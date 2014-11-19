@@ -16,73 +16,74 @@ flightApi = require('./../api/flight')
   apikey: apikey.getSync(),
   baseUrl: properties.getBaseUrl
 
-class Flight
-  @delete: (id)->
-    return flightApi.deleteSync(id)
+exports.Flight =
+  class Flight
+    @delete: (id)->
+      return flightApi.deleteSync(id)
 
-  @create: (flight) ->
-    if flight.id != null
-      throw new Error("Error. You can't create this flight because ID isn't null")
-    return flightApi.postSync(flight.toXML())
+    @create: (flight) ->
+      if flight.id != null
+        throw new Error("Error. You can't create this flight because ID isn't null")
+      return flightApi.postSync(flight.toXML())
 
-  @get: (id) ->
-    json = flightApi.getSync id
-    result = new Flight()
-    result.json = json
-    result.id = id
-    return result
+    @get: (id) ->
+      json = flightApi.getSync id
+      result = new Flight()
+      result.json = json
+      result.id = id
+      return result
 
-  @update: (flight) ->
-    if flight.id == null
-      throw new Error("Error. Object flight has id equals null")
-    return flightApi.putSync(flight.id, flight.toXML())
+    @update: (flight) ->
+      if flight.id == null
+        throw new Error("Error. Object flight has id equals null")
+      return flightApi.putSync(flight.id, flight.toXML())
 
-  @getDefParams = {
-    prefix: 'TST'
-    dep_datetime: '2014-12-01T07:45:00Z'
-  }
+    @getDefParams = {
+      prefix: 'TST'
+      dep_datetime: '2014-12-01T07:45:00Z'
+    }
 
-  constructor: (input = null)->
-    raw = fs.readFileSync('scenarios/create-retrieve-flight/flight.xml', { encoding: 'UTF8' });
-    xml = pd.xmlmin(raw)
-    if input
-      for field, value of input
-        xml = xml.replace('${' + field + '}', value)
+    constructor: (input = null)->
+      raw = fs.readFileSync('scenarios/create-retrieve-flight/flight.xml', { encoding: 'UTF8' });
+      xml = pd.xmlmin(raw)
+      if input
+        for field, value of input
+          xml = xml.replace('${' + field + '}', value)
 
-    def = Flight.getDefParams
+      def = Flight.getDefParams
 
-    flno = flnogen.flnogen(3, if input?.prefix then input.prefix else def.prefix)
-    xml = xml.replace(/\$\{flno\}/g, flno).replace('${prefix}', def.prefix).replace('${dep_datetime}',
-      def.dep_datetime);
-    parseString(xml, (err, result)=>
-      @json = result
-    )
+      flno = flnogen.flnogen(3, if input?.prefix then input.prefix else def.prefix)
+      xml = xml.replace(/\$\{flno\}/g, flno).replace('${prefix}', def.prefix).replace('${dep_datetime}',
+        def.dep_datetime);
+      parseString(xml, (err, result)=>
+        @json = result
+      )
 
-  toXML: ->
-    js2xmlparser("ns2:FlightSchedule", @json["ns2:FlightSchedule"], {attributeString: "$"})
+    toXML: ->
+      js2xmlparser("ns2:FlightSchedule", @json["ns2:FlightSchedule"], {attributeString: "$"})
 
-  id: null
-  json: {}
+    id: null
+    json: {}
 
-
-execFunction = ->
-  flight = new Flight()
-
-  id = Flight.create flight
-
-  flight = Flight.get(id)
-  console.log(flight.json["ns2:FlightSchedule"]["SegmentList"][0]["Segment"][0]["FlightId"][0]["DepartureDateTime"][0])
-  flight.json["ns2:FlightSchedule"]["SegmentList"][0]["Segment"][0]["FlightId"][0]["DepartureDateTime"][0] = '2014-12-01T10:45:00Z'
-
-  Flight.update flight
-  flight = Flight.get(id)
-  console.log(flight.json["ns2:FlightSchedule"]["SegmentList"][0]["Segment"][0]["FlightId"][0]["DepartureDateTime"][0])
-
-  Flight.delete id
-
-
-wait.launchFiber execFunction;
-
-
+#
+#execFunction = ->
+#  flight = new Flight()
+#
+#  id = Flight.create flight
+#
+#  flight = Flight.get(id)
+#  console.log(flight.json["ns2:FlightSchedule"]["SegmentList"][0]["Segment"][0]["FlightId"][0]["DepartureDateTime"][0])
+#  flight.json["ns2:FlightSchedule"]["SegmentList"][0]["Segment"][0]["FlightId"][0]["DepartureDateTime"][0] = '2014-12-01T10:45:00Z'
+#
+#  Flight.update flight
+#  flight = Flight.get(id)
+#  console.log(flight.json["ns2:FlightSchedule"]["SegmentList"][0]["Segment"][0]["FlightId"][0]["DepartureDateTime"][0])
+#
+#  Flight.delete id
+#
+#
+#wait.launchFiber execFunction;
+#
+#
 
 
