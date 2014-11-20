@@ -1,0 +1,1 @@
+scenario.js is a simple example of searching flight and getting the passenger list
