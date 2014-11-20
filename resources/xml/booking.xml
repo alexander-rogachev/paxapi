@@ -1,25 +1,25 @@
 <?xml version='1.0' encoding='utf-8'?>
 <ns2:Booking xmlns:ns2="http://api.paxport.se/openpax/messages" xmlns="http://api.paxport.se/openpax/types">
     <BookingNumber>${bono}</BookingNumber>
-    <CarrierCode>TST</CarrierCode>
+    <CarrierCode>${prefix}</CarrierCode>
     <TourOperatorName>Test</TourOperatorName>
     <TourOperatorCode>TTT</TourOperatorCode>
     <FlightList>
         <!--1 or more repetitions:-->
         <Flight>
             <FlightId>
-                <CarrierCode>TST</CarrierCode>
-                <FlightNumber>TST111</FlightNumber>
-                <DepartureDateTime>2014-12-01T07:45:00Z</DepartureDateTime>
+                <CarrierCode>${prefix}</CarrierCode>
+                <FlightNumber>${flno}</FlightNumber>
+                <DepartureDateTime>${departureDate}</DepartureDateTime>
             </FlightId>
             <DepartureAirport>
-                <Code>ARN</Code>
+                <Code>${departureAirport}</Code>
             </DepartureAirport>
-            <ArrivalTime>2014-12-01T10:45:00Z</ArrivalTime>
+            <ArrivalTime>${arrivalDate}</ArrivalTime>
             <ArrivalAirport>
-                <Code>BKK</Code>
+                <Code>${arrivalAirport}</Code>
             </ArrivalAirport>
-            <CabinClass>C</CabinClass>
+            <CabinClass>${serviceType}</CabinClass>
         </Flight>
     </FlightList>
     <PassengerList>

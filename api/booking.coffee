@@ -47,14 +47,30 @@ mappingToFlight =
 
 exports.Booking =
   class Booking
+
+    @getDefParams = {
+      prefix: 'TST',
+      flno: 'TST111',
+      departureDate: '2014-12-01T07:45:00Z',
+      departureAirport: 'ARN',
+      arrivalDate: '2014-12-01T10:45:00Z',
+      arrivalAirport: 'BKK',
+      serviceType: 'C'
+    }
+
     constructor: (input = null) ->
       raw = fs.readFileSync(__dirname + '/../resources/xml/booking.xml', { encoding: 'UTF8' });
       person = generatePerson.get();
       bono = bonogen.bonogen(7);
-      xml = pd.xmlmin(raw).replace('${bono}', bono)
+
+      xml = pd.xmlmin(raw).replace('${bono}', bono);
 
       if input then xml = @replaceInputParams(xml, input)
       xml = @replaceWithRandom(xml, person);
+
+      for field, value of Booking.getDefParams
+        xml = xml.replace(new RegExp('\\$\\{' + field + '\\}', "g"), value)
+
       parseString(xml, (err, result)=>
         @json = result
       )

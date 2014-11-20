@@ -38,24 +38,27 @@ exports.Flight =
       return flightApi.putSync(flight.id, flight.toXML())
 
     @getDefParams = {
-      prefix: 'TST'
+      prefix: 'TST',
+      flno: 'TST111',
+      departureDate: '2014-12-01T07:45:00Z',
+      departureAirport: 'ARN',
+      arrivalDate: '2014-12-01T10:45:00Z',
+      arrivalAirport: 'BKK',
+      serviceType: 'C'
     }
 
     constructor: (input = null)->
       raw = fs.readFileSync(__dirname + '/../resources/xml/flight.xml', { encoding: 'UTF8' });
       xml = pd.xmlmin(raw)
+      def = Flight.getDefParams
+      flFields = flgen.get(if input?.prefix then input.prefix else def.prefix);
       if input
         for field, value of input
 
           xml = xml.replace('${' + field + '}', value)
 
-      def = Flight.getDefParams
-
-      flFields = flgen.get(if input?.prefix then input.prefix else def.prefix);
-      xml = xml.replace(/\$\{flno\}/g, flFields.flightNumber).replace('${prefix}',
-        flFields.carrierCode).replace('${departureDate}', flFields.departureDate).replace('${arrivalDate}',
-        flFields.arrivalDate).replace(/\$\{departureAirport\}/g, flFields.departureAirport).replace('${arrivalAirport}',
-        flFields.arrivalAirport).replace('${serviceType}', flFields.serviceType);
+      for field, value of flFields
+        xml = xml.replace(new RegExp('\\$\\{' + field + '\\}', "g"), value)
 
 
       parseString(xml, (err, result)=>
