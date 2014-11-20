@@ -38,7 +38,7 @@ mappingFields =
 exports.Booking =
   class Booking
     constructor: (input = null) ->
-      raw = fs.readFileSync(__dirname + '/../scenarios/create-retrieve-booking/booking.xml', { encoding: 'UTF8' });
+      raw = fs.readFileSync(__dirname + '/../resources/xml/booking.xml', { encoding: 'UTF8' });
       person = generatePerson.get();
       bono = bonogen.bonogen(7);
       xml = pd.xmlmin(raw).replace('${bono}', bono)
@@ -75,13 +75,13 @@ exports.Booking =
     toXML: ->
       js2xmlparser("ns2:Booking", @json["ns2:Booking"], {attributeString: "$"})
 
-    replaceWithRandom:(xml, randomData) ->
+    replaceWithRandom: (xml, randomData) ->
       for field, value of mappingFields
         expr = new RegExp('\\$\\{' + field + '\\}', "g");
         xml = xml.replace(expr, if !value.func then randomData[value.field] else value.func(randomData[value.field]))
       return xml
 
-    replaceInputParams:(xml, params) ->
+    replaceInputParams: (xml, params) ->
       for field, value of params
         expr = new RegExp('\\$\\{' + field + '\\}', "g");
         xml = xml.replace(expr, value)
@@ -90,7 +90,7 @@ exports.Booking =
     addPassenger: (params) ->
       if !@json? then throw new Error("Object with Booking type has empty json field")
 
-      raw = fs.readFileSync(__dirname + '/../scenarios/create-retrieve-booking/passenger.xml', { encoding: 'UTF8' });
+      raw = fs.readFileSync(__dirname + '/../resources/xml/passenger.xml', { encoding: 'UTF8' });
       xmlOriginal = pd.xmlmin(raw)
 
       #Create random passengers
@@ -98,13 +98,8 @@ exports.Booking =
         for num in [0..params.count - 1]
           person = generatePerson.get();
           xml = @replaceWithRandom(xmlOriginal, person)
-          passJson = {}
           parseString(xml, (err, result)=>
-            temp = result["Passenger"]
-            result["Passenger"] = []
-            result["Passenger"].push(temp)
-            console.log(result)
-            @passengers().push(result)
+            @passengers().push(result["Passenger"])
           )
 
       else if params?.passengers and params.passengers.length > 0
@@ -113,41 +108,11 @@ exports.Booking =
           person = generatePerson.get();
           xml = @replaceWithRandom(xml, person)
           parseString(xml, (err, result)=>
-            @passengers().push(result)
+            @passengers().push(result["Passenger"])
           )
 
-
-
     passengers: ->
-      @json["ns2:Booking"]["PassengerList"]
-
-#
-#execFunction = ->
-#  booking = new Booking({passengerName: 'MyName', passengerSurname: 'Vasya'})
-#
-#  id = Booking.create booking
-#
-#  booking = Booking.get(id)
-#  console.log(booking.json["ns2:Booking"]["PassengerList"][0]["Passenger"][0]["FirstName"][0])
-#  booking.json["ns2:Booking"]["PassengerList"][0]["Passenger"][0]["FirstName"][0] = 'Alesha123'
-#  Booking.update booking
-#
-#  booking = Booking.get(id)
-#  console.log(booking.json["ns2:Booking"]["PassengerList"][0]["Passenger"][0]["FirstName"][0])
-#
-#  Booking.delete id
-#
-#
-#wait.launchFiber execFunction;
-
-#execFunction = ->
-#  booking = new Booking({passengerName: 'MyName', passengerSurname: 'Vasya'})
-#  booking.addPassenger {count: 2}
-#
-#wait.launchFiber execFunction;
-
-
-
+      @json["ns2:Booking"]["PassengerList"][0]["Passenger"]
 
 
 
