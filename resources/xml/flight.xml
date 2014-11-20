@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<ns2:FlightSchedule xmlns:ns2="http://api.paxport.se/openpax/messages" xmlns="http://api.paxport.se/openpax/types">
+    <FlightNumber>${flno}</FlightNumber>
+    <SegmentList>
+        <Segment>
+            <FlightId>
+                <CarrierCode>${prefix}</CarrierCode>
+                <FlightNumber>${flno}</FlightNumber>
+                <DepartureDateTime>${departureDate}</DepartureDateTime>
+                <DepartureAirportCode>${departureAirport}</DepartureAirportCode>
+            </FlightId>
+            <DepartureAirport>
+                <Code>${departureAirport}</Code>
+            </DepartureAirport>
+            <ArrivalTime>${arrivalDate}</ArrivalTime>
+            <ArrivalAirport>
+                <Code>${arrivalAirport}</Code>
+            </ArrivalAirport>
+        </Segment>
+    </SegmentList>
+    <ServiceType>${serviceType}</ServiceType>
+    <AircraftType>76W</AircraftType>
+    <AircraftConfiguration>Y291</AircraftConfiguration>
+</ns2:FlightSchedule>
