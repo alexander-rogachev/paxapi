@@ -51,11 +51,16 @@ exports.Flight =
       raw = fs.readFileSync(__dirname + '/../resources/xml/flight.xml', { encoding: 'UTF8' });
       xml = pd.xmlmin(raw)
       def = Flight.getDefParams
-      flFields = flgen.get(if input?.prefix then input.prefix else def.prefix);
-      if input
-        for field, value of input
 
-          xml = xml.replace('${' + field + '}', value)
+      flFields = flgen.get(if input?.prefix then input.prefix else def.prefix);
+
+      if input
+        if !input["defParams"]?
+          for field, value of input
+            xml = xml.replace('${' + field + '}', value)
+        else
+          for field, value of def
+            xml = xml.replace(new RegExp('\\$\\{' + field + '\\}', "g"), value)
 
       for field, value of flFields
         xml = xml.replace(new RegExp('\\$\\{' + field + '\\}', "g"), value)

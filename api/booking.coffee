@@ -116,6 +116,7 @@ exports.Booking =
     addPassenger: (params) ->
       if !@json? then throw new Error("Object with Booking type has empty json field")
 
+
       raw = fs.readFileSync(__dirname + '/../resources/xml/passengerTemplate.xml', { encoding: 'UTF8' });
       xmlOriginal = pd.xmlmin(raw)
 
@@ -138,10 +139,19 @@ exports.Booking =
           )
 
     setFlight: (flight) ->
-      console.log(util.inspect(@json, { showHidden: true, depth: null }));
-
       @json["ns2:Booking"]["FlightList"][0]["Flight"] = []
+      @pAddFlight(flight)
 
+    addFlight: (flight) ->
+      @pAddFlight(flight)
+
+    passengers: ->
+      @json["ns2:Booking"]["PassengerList"][0]["Passenger"]
+
+    flights: ->
+      return @json["ns2:Booking"]["FlightList"][0]["Flight"]
+
+    pAddFlight: (flight) ->
       raw = fs.readFileSync(__dirname + '/../resources/xml/flightTemplate.xml', { encoding: 'UTF8' });
       xml = pd.xmlmin(raw)
       for key, value of mappingToFlight
@@ -150,17 +160,8 @@ exports.Booking =
       parseString(xml, (err, result)->
         flightJson = result
       )
-
       @flights().push flightJson["Flight"]
-      console.log(util.inspect(@json, { showHidden: true, depth: null }));
 
-    addFlight: (flight) ->
-
-    passengers: ->
-      @json["ns2:Booking"]["PassengerList"][0]["Passenger"]
-
-    flights: ->
-      return @json["ns2:Booking"]["FlightList"][0]["Flight"]
 
 
 
