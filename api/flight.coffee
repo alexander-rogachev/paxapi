@@ -5,7 +5,7 @@ pd = require('pretty-data').pd;
 colors = require('colors');
 properties = require('./../util/_properties');
 apikey = require('./../util/_apikey');
-flnogen = require('./../util/_flnogen');
+flgen = require('./../util/_generateFlightFields');
 parseString = require('xml2js').parseString;
 js2xmlparser = require("js2xmlparser");
 
@@ -39,7 +39,6 @@ exports.Flight =
 
     @getDefParams = {
       prefix: 'TST'
-      dep_datetime: '2014-12-01T07:45:00Z'
     }
 
     constructor: (input = null)->
@@ -51,9 +50,11 @@ exports.Flight =
 
       def = Flight.getDefParams
 
-      flno = flnogen.flnogen(3, if input?.prefix then input.prefix else def.prefix)
-      xml = xml.replace(/\$\{flno\}/g, flno).replace('${prefix}', def.prefix).replace('${dep_datetime}',
-        def.dep_datetime);
+      flFields = flgen.get(if input?.prefix then input.prefix else def.prefix);
+      xml = xml.replace(/\$\{flno\}/g, flFields.flightNumber).replace('${prefix}', flFields.carrierCode).replace('${departureDate}', flFields.departureDate).replace('${arrivalDate}',
+        flFields.arrivalDate).replace(/\$\{departureAirport\}/g, flFields.departureAirport).replace('${arrivalAirport}', flFields.arrivalAirport).replace('${serviceType}', flFields.serviceType);
+
+      console.log(xml);
       parseString(xml, (err, result)=>
         @json = result
       )
@@ -64,7 +65,7 @@ exports.Flight =
     id: null
     json: {}
 
-#
+
 #execFunction = ->
 #  flight = new Flight()
 #
@@ -72,7 +73,11 @@ exports.Flight =
 #
 #  flight = Flight.get(id)
 #  console.log(flight.json["ns2:FlightSchedule"]["SegmentList"][0]["Segment"][0]["FlightId"][0]["DepartureDateTime"][0])
-#  flight.json["ns2:FlightSchedule"]["SegmentList"][0]["Segment"][0]["FlightId"][0]["DepartureDateTime"][0] = '2014-12-01T10:45:00Z'
+#
+#  #New depDate should be in 14-15 day from old depDate, but not later then arrivalDate
+#  depDate = (new Date(flight.json["ns2:FlightSchedule"]["SegmentList"][0]["Segment"][0]["FlightId"][0]["DepartureDateTime"][0])).addDays(-5).toJSON();
+#
+#  flight.json["ns2:FlightSchedule"]["SegmentList"][0]["Segment"][0]["FlightId"][0]["DepartureDateTime"][0] = depDate
 #
 #  Flight.update flight
 #  flight = Flight.get(id)
@@ -82,7 +87,7 @@ exports.Flight =
 #
 #
 #wait.launchFiber execFunction;
-#
-#
+
+
 
 
