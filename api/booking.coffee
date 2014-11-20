@@ -15,7 +15,7 @@ bookingApi = require('./booking.js')
   apikey: apikey.getSync(),
   baseUrl: properties.getBaseUrl
 
-mappingFields =
+mappingToPerson =
   passengerName:
     field: 'firstName'
   passengerSurname:
@@ -34,6 +34,16 @@ mappingFields =
     field: 'state'
   zipCode:
     field: 'zipCpde'
+
+mappingToFlight =
+  prefix: "carrierCode"
+  flno: "flightNumber"
+  departureDate: "departureDateTime"
+  departureAirport: "departureAirport"
+  arrivalDate: "arrivalTime"
+  arrivalAirport: "arrivalAirport"
+  serviceType: "serviceType"
+
 
 exports.Booking =
   class Booking
@@ -92,7 +102,7 @@ exports.Booking =
       js2xmlparser("ns2:Booking", @json["ns2:Booking"], {attributeString: "$"})
 
     replaceWithRandom: (xml, randomData) ->
-      for field, value of mappingFields
+      for field, value of mappingToPerson
         expr = new RegExp('\\$\\{' + field + '\\}', "g");
         xml = xml.replace(expr, if !value.func then randomData[value.field] else value.func(randomData[value.field]))
       return xml
@@ -106,7 +116,8 @@ exports.Booking =
     addPassenger: (params) ->
       if !@json? then throw new Error("Object with Booking type has empty json field")
 
-      raw = fs.readFileSync(__dirname + '/../resources/xml/passenger.xml', { encoding: 'UTF8' });
+
+      raw = fs.readFileSync(__dirname + '/../resources/xml/passengerTemplate.xml', { encoding: 'UTF8' });
       xmlOriginal = pd.xmlmin(raw)
 
       #Create random passengers
@@ -127,8 +138,29 @@ exports.Booking =
             @passengers().push(result["Passenger"])
           )
 
+    setFlight: (flight) ->
+      @json["ns2:Booking"]["FlightList"][0]["Flight"] = []
+      @pAddFlight(flight)
+
+    addFlight: (flight) ->
+      @pAddFlight(flight)
+
     passengers: ->
       @json["ns2:Booking"]["PassengerList"][0]["Passenger"]
+
+    flights: ->
+      return @json["ns2:Booking"]["FlightList"][0]["Flight"]
+
+    pAddFlight: (flight) ->
+      raw = fs.readFileSync(__dirname + '/../resources/xml/flightTemplate.xml', { encoding: 'UTF8' });
+      xml = pd.xmlmin(raw)
+      for key, value of mappingToFlight
+        xml = xml.replace('${' + key + '}', flight[value]())
+      flightJson = {}
+      parseString(xml, (err, result)->
+        flightJson = result
+      )
+      @flights().push flightJson["Flight"]
 
 
 
