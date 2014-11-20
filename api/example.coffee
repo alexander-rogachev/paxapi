@@ -12,6 +12,10 @@ execFunction = ->
   booking = Booking.get(id)
   console.log(booking.json["ns2:Booking"]["PassengerList"][0]["Passenger"][0]["FirstName"][0])
   booking.json["ns2:Booking"]["PassengerList"][0]["Passenger"][0]["FirstName"][0] = 'Alesha123'
+
+  booking.addPassenger({count: 2})
+  booking.addPassenger({passengers: [{passengerName: "A123"},{passengerSurname: "b123"}]})
+
   Booking.update booking
 
   booking = Booking.get(id)
@@ -26,7 +30,7 @@ execFunction = ->
 
   flight = Flight.get(id)
   console.log(flight.json["ns2:FlightSchedule"]["SegmentList"][0]["Segment"][0]["FlightId"][0]["DepartureDateTime"][0])
-  flight.json["ns2:FlightSchedule"]["SegmentList"][0]["Segment"][0]["FlightId"][0]["DepartureDateTime"][0] = '2014-12-01T10:45:00Z'
+  flight.json["ns2:FlightSchedule"]["SegmentList"][0]["Segment"][0]["FlightId"][0]["DepartureDateTime"][0] = '2014-12-10T10:45:00Z'
 
   Flight.update flight
   flight = Flight.get(id)

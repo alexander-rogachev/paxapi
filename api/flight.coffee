@@ -42,7 +42,7 @@ exports.Flight =
     }
 
     constructor: (input = null)->
-      raw = fs.readFileSync(__dirname+'/../scenarios/create-retrieve-flight/flight.xml', { encoding: 'UTF8' });
+      raw = fs.readFileSync(__dirname+'/../resources/xml/flight.xml', { encoding: 'UTF8' });
       xml = pd.xmlmin(raw)
       if input
         for field, value of input
@@ -64,30 +64,6 @@ exports.Flight =
 
     id: null
     json: {}
-
-
-#execFunction = ->
-#  flight = new Flight()
-#
-#  id = Flight.create flight
-#
-#  flight = Flight.get(id)
-#  console.log(flight.json["ns2:FlightSchedule"]["SegmentList"][0]["Segment"][0]["FlightId"][0]["DepartureDateTime"][0])
-#
-#  #New depDate should be in 14-15 day from old depDate, but not later then arrivalDate
-#  depDate = (new Date(flight.json["ns2:FlightSchedule"]["SegmentList"][0]["Segment"][0]["FlightId"][0]["DepartureDateTime"][0])).addDays(-5).toJSON();
-#
-#  flight.json["ns2:FlightSchedule"]["SegmentList"][0]["Segment"][0]["FlightId"][0]["DepartureDateTime"][0] = depDate
-#
-#  Flight.update flight
-#  flight = Flight.get(id)
-#  console.log(flight.json["ns2:FlightSchedule"]["SegmentList"][0]["Segment"][0]["FlightId"][0]["DepartureDateTime"][0])
-#
-#  Flight.delete id
-#
-#
-#wait.launchFiber execFunction;
-
 
 
 
