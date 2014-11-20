@@ -3,7 +3,7 @@ var properties = require('./../../util/_properties');
 var apikey = require('./../../util/_apikey');
 var colors = require('colors');
 var fs = require('fs');
-var flnogen = require('./../../util/_flnogen');
+var flgen = require('./../../util/_generateFlightFields');
 var pd = require('pretty-data').pd;
 
 var f = require('./../../api/flight')(
@@ -26,9 +26,10 @@ console.log('Wanna cancel a flight?'.blue);
 
 var raw = fs.readFileSync(__dirname + '/flight.xml', { encoding: 'UTF8' });
 var prefix = 'TST';
-var flno = flnogen.flnogen(3, prefix);
-var dep_datetime = '2014-12-01T07:45:00Z';
-var xml = pd.xmlmin(raw).replace(/\$\{flno\}/g, flno).replace('${prefix}', prefix).replace('${dep_datetime}', dep_datetime);
+var flFields = flgen.get(prefix);
+var xml = pd.xmlmin(raw).replace(/\$\{flno\}/g, flFields.flightNumber).replace('${prefix}', prefix).replace('${departureDate}', flFields.departureDate).replace('${arrivalDate}', flFields.arrivalDate)
+    .replace(/\$\{departureAirport\}/g, flFields.departureAirport).replace('${arrivalAirport}', flFields.arrivalAirport).replace('${serviceType}', flFields.serviceType);
+
 console.log(xml)
 f.post(xml)
     .then(
@@ -36,15 +37,15 @@ f.post(xml)
         console.log('Created!'.green);
         var flid = {
             id: data,
-            number: flno,
-            departing: dep_datetime
+            number: flFields.flightNumber,
+            departing: flFields.departureDate
         };
         console.log(flid);
 
         f.delete(flid.id)
             .then(
             function (data) {
-                console.log('Booking is Cancelled!'.green);
+                console.log('Flight is Cancelled!'.green);
             })
     })
     .fail(function () {

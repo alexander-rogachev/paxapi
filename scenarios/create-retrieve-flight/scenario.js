@@ -5,7 +5,7 @@ var pd = require('pretty-data').pd;
 var colors = require('colors');
 var properties = require('./../../util/_properties');
 var apikey = require('./../../util/_apikey');
-var flnogen = require('./../../util/_flnogen');
+var flgen = require('./../../util/_generateFlightFields');
 var f = require('./../../api/flight')(
   {
     client: new Client(),
@@ -25,17 +25,17 @@ var f = require('./../../api/flight')(
 console.log('Wanna create a flight?'.blue);
 var raw = fs.readFileSync(__dirname + '/flight.xml', { encoding: 'UTF8' });
 var prefix = 'TST';
-var flno = flnogen.flnogen(3, prefix);
-var dep_datetime = '2014-12-01T07:45:00Z';
-var xml = pd.xmlmin(raw).replace('${flno}', flno).replace('${prefix}', prefix).replace('${dep_datetime}', dep_datetime);
+var flFields = flgen.get(prefix);
+var xml = pd.xmlmin(raw).replace(/\$\{flno\}/g, flFields.flightNumber).replace('${prefix}', prefix).replace('${departureDate}', flFields.departureDate).replace('${arrivalDate}', flFields.arrivalDate)
+    .replace(/\$\{departureAirport\}/g, flFields.departureAirport).replace('${arrivalAirport}', flFields.arrivalAirport).replace('${serviceType}', flFields.serviceType);
 f.post(xml)
   .then(
     function(data) {
       console.log('Created!'.green);
       var flid = {
         id: data,
-        number: flno,
-        departing: dep_datetime
+        number: flFields.flightNumber,
+        departing: flFields.departureDate
       };
       console.log(flid);
 

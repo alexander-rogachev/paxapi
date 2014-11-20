@@ -6,19 +6,19 @@
             <FlightId>
                 <CarrierCode>${prefix}</CarrierCode>
                 <FlightNumber>${flno}</FlightNumber>
-                <DepartureDateTime>${dep_datetime}</DepartureDateTime>
-                <DepartureAirportCode>ARN</DepartureAirportCode>
+                <DepartureDateTime>${departureDate}</DepartureDateTime>
+                <DepartureAirportCode>${departureAirport}</DepartureAirportCode>
             </FlightId>
             <DepartureAirport>
-                <Code>ARN</Code>
+                <Code>${departureAirport}</Code>
             </DepartureAirport>
-            <ArrivalTime>2014-12-01T10:45:00Z</ArrivalTime>
+            <ArrivalTime>${arrivalDate}</ArrivalTime>
             <ArrivalAirport>
-                <Code>BKK</Code>
+                <Code>${arrivalAirport}</Code>
             </ArrivalAirport>
         </Segment>
     </SegmentList>
-    <ServiceType>C</ServiceType>
+    <ServiceType>${serviceType}</ServiceType>
     <AircraftType>76W</AircraftType>
     <AircraftConfiguration>Y291</AircraftConfiguration>
 </ns2:FlightSchedule>
