@@ -38,20 +38,13 @@ mappingFields =
 exports.Booking =
   class Booking
     constructor: (input = null) ->
-      raw = fs.readFileSync(__dirname+'/../scenarios/create-retrieve-booking/booking.xml', { encoding: 'UTF8' });
+      raw = fs.readFileSync(__dirname + '/../scenarios/create-retrieve-booking/booking.xml', { encoding: 'UTF8' });
       person = generatePerson.get();
       bono = bonogen.bonogen(7);
       xml = pd.xmlmin(raw).replace('${bono}', bono)
 
-      if input
-        for field, value of input
-          expr = new RegExp('\\$\\{' + field + '\\}', "g");
-          xml = xml.replace(expr, value)
-
-      for field, value of mappingFields
-        expr = new RegExp('\\$\\{' + field + '\\}', "g");
-        xml = xml.replace(expr, if !value.func then person[value.field] else value.func(person[value.field]))
-
+      if input then xml = @replaceInputParams(input)
+      xml = @replaceWithRandom(xml, person);
       parseString(xml, (err, result)=>
         @json = result
       )
@@ -82,19 +75,47 @@ exports.Booking =
     toXML: ->
       js2xmlparser("ns2:Booking", @json["ns2:Booking"], {attributeString: "$"})
 
-#    addPassenger: (params) ->
-#      raw = fs.readFileSync(__dirname + '/scenarios/create-retrieve-booking/passenger.xml', { encoding: 'UTF8' });
-#      xmlOriginal = pd.xmlmin(raw)
-#
-#      if params?.count and params.count > 0
-#        for num in [0..params.count - 1]
-#          person = generatePerson.get();
-#          for field, value of mappingFields
-#            expr = new RegExp('\\$\\{' + field + '\\}', "g");
-#            xml = xmlOriginal.replace(expr, if !value.func then person[value.field] else value.func(person[value.field]))
-#
-#        console.log(xml)
-#        return;
+    replaceWithRandom:(xml, randomData) ->
+      for field, value of mappingFields
+        expr = new RegExp('\\$\\{' + field + '\\}', "g");
+        xml = xml.replace(expr, if !value.func then randomData[value.field] else value.func(randomData[value.field]))
+      return xml
+
+    replaceInputParams:(xml, params) ->
+      for field, value of params
+        expr = new RegExp('\\$\\{' + field + '\\}', "g");
+        xml = xml.replace(expr, value)
+      return xml
+
+    addPassenger: (params) ->
+      if !@json? then throw new Error("Object with Booking type has empty json field")
+
+      raw = fs.readFileSync(__dirname + '/../scenarios/create-retrieve-booking/passenger.xml', { encoding: 'UTF8' });
+      xmlOriginal = pd.xmlmin(raw)
+
+      #Create random passengers
+      if params?.count and params.count > 0
+        for num in [0..params.count - 1]
+          person = generatePerson.get();
+          xml = @replaceWithRandom(xmlOriginal, person)
+          passJson = {}
+          parseString(xml, (err, result)=>
+            temp = result["Passenger"]
+            result["Passenger"] = []
+            result["Passenger"].push(temp)
+            console.log(result)
+            @passengers().push(result)
+          )
+
+      else if params?.passengers and params.passengers.length > 0
+        for pass in params.passengers
+          xml = @replaceInputParams(xmlOriginal, pass)
+          person = generatePerson.get();
+          xml = @replaceWithRandom(xml, person)
+          parseString(xml, (err, result)=>
+            @passengers().push(result)
+          )
+
 
 
     passengers: ->
