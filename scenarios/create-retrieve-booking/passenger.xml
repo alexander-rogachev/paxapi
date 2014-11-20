@@ -1,7 +1,0 @@
-<Passenger>
-    <FirstName>${passengerName}</FirstName>
-    <LastName>${passengerSurname}</LastName>
-    <Category>adult</Category>
-    <Age>30</Age>
-    <Gender>${sex}</Gender>
-</Passenger>

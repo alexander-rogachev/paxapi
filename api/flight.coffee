@@ -46,6 +46,7 @@ exports.Flight =
       xml = pd.xmlmin(raw)
       if input
         for field, value of input
+
           xml = xml.replace('${' + field + '}', value)
 
       def = Flight.getDefParams
@@ -56,7 +57,7 @@ exports.Flight =
         flFields.arrivalDate).replace(/\$\{departureAirport\}/g, flFields.departureAirport).replace('${arrivalAirport}',
         flFields.arrivalAirport).replace('${serviceType}', flFields.serviceType);
 
-      console.log(xml);
+
       parseString(xml, (err, result)=>
         @json = result
       )

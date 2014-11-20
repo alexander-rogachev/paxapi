@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Flight>
+    <FlightId>
+        <CarrierCode>${prefix}</CarrierCode>
+        <FlightNumber>${flno}</FlightNumber>
+        <DepartureDateTime>${departureDate}</DepartureDateTime>
+    </FlightId>
+    <DepartureAirport>
+        <Code>${departureAirport}</Code>
+    </DepartureAirport>
+    <ArrivalTime>${arrivalDate}</ArrivalTime>
+    <ArrivalAirport>
+        <Code>${arrivalAirport}</Code>
+    </ArrivalAirport>
+    <CabinClass>${serviceType}</CabinClass>
+</Flight>
