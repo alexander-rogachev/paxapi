@@ -30,7 +30,8 @@ var flFields = flgen.get(prefix);
 var xml = pd.xmlmin(raw).replace(/\$\{flno\}/g, flFields.flightNumber).replace('${prefix}', prefix).replace('${departureDate}', flFields.departureDate).replace('${arrivalDate}', flFields.arrivalDate)
     .replace(/\$\{departureAirport\}/g, flFields.departureAirport).replace('${arrivalAirport}', flFields.arrivalAirport).replace('${serviceType}', flFields.serviceType);
 
-var newDepDate = '2014-12-11T16:45:00.000Z';
+//New depDate should be in 14-15 day from old depDate, but not later then arrivalDate
+var newDepDate = (new Date(flFields.departureDate)).addDays(-5).toJSON();
 var xml_update = pd.xmlmin(raw).replace(/\$\{flno\}/g, flFields.flightNumber).replace('${prefix}', prefix).replace('${departureDate}', newDepDate).replace('${arrivalDate}', flFields.arrivalDate)
     .replace(/\$\{departureAirport\}/g, flFields.departureAirport).replace('${arrivalAirport}', flFields.arrivalAirport).replace('${serviceType}', flFields.serviceType);
 
