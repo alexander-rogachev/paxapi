@@ -232,7 +232,7 @@ module.exports = function (params) {
         } else if (result.response.statusCode === 404) {
             throw new Error("404 - Flight not found");
         } else if (result.response.statusCode !== 204) {
-            throw new Error(response.statusCode + " - Something went wrong... :-(");
+            throw new Error(result.response.statusCode + " - Something went wrong... :-(");
         }
         return result;
     };
