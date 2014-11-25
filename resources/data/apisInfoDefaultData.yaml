@@ -1,0 +1,33 @@
+travelDocumentType:
+  'P'
+travelDocumentNumber:
+  36247
+travelDocumentIssuingCountry:
+  'US'
+passengerNationality:
+  'RUS'
+dateOfBirth:
+  '1984-12-14'
+travelDocumentExpiryDate:
+  '2015-12-14'
+passengerName:
+travelDocumentSecondGivenName:
+  'HGH'
+passengerSurname:
+genderCode:
+resCountryCode:
+  'US'
+resState:
+resCity:
+resStreet:
+resZipCode:
+desCountryCode:
+  'US'
+desState:
+desCity:
+desStreet:
+desZipCode:
+redressNumber:
+  3827648
+knownTravelerNumber:
+  28748
