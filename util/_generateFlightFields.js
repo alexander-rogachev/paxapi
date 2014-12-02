@@ -5,10 +5,12 @@ var flightFields = {
     "prefix": "",
     "flno": "",
     "departureDate": "",
-    "departureAirport": "",
+    "departureAirport": "ARN",
     "arrivalDate": "",
-    "arrivalAirport": "",
-    "serviceType": ""
+    "arrivalAirport": "BKK",
+    "serviceType": "C",
+    aircraftType: '76W',
+    aircraftConfiguration: 'Y291'
 }
 
 //todo get airports from somewhere
@@ -17,9 +19,6 @@ exports.get = function (prefix, departureDate) {
     var depDate = departureDate ? new Date(departureDate) : Date.tomorrow().addMonths(Math.floor(Math.random() * 4) + 1);
     flightFields.prefix = prefix;
     flightFields.flno = flnogen.flnogen(3, prefix);
-    flightFields.departureAirport = "ARN";
-    flightFields.arrivalAirport = "BKK";
-    flightFields.serviceType = "C";
     flightFields.departureDate = depDate.toJSON()
     flightFields.arrivalDate = depDate.clone().addHours(Math.floor(Math.random() * 6) + 1).toJSON();
 

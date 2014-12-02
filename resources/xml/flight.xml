@@ -19,6 +19,6 @@
         </Segment>
     </SegmentList>
     <ServiceType>${serviceType}</ServiceType>
-    <AircraftType>76W</AircraftType>
-    <AircraftConfiguration>Y291</AircraftConfiguration>
+    <AircraftType>${aircraftType}</AircraftType>
+    <AircraftConfiguration>${aircraftConfiguration}</AircraftConfiguration>
 </ns2:FlightSchedule>
