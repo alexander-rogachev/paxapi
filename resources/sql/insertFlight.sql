@@ -18,7 +18,10 @@ select nextval('s_departure') as departure_id,
   (select airport_id from airport where airport_code = '${dep_airport_code}') as departure_airport_id,
   (select airport_id from airport where airport_code = '${arr_airport_code}') as arrival_airport_id,
   '${carrier_code}', '${carrier_code}', '${flight_no}', '${departure_date_time}', 'NEW', CURRENT_TIMESTAMP,
-  (select carrier_id from carrier where carrier_code = '${carrier_code}'), CURRENT_TIMESTAMP, 1, '';
+  (	select organisation_id
+		from carrier_customer as cc inner join carrier as c on cc.main_carrier_id = c.carrier_id
+		where carrier_code = '${carrier_code}'),
+   CURRENT_TIMESTAMP, 0, '';
 
 
 Insert into departure_group (
@@ -46,16 +49,20 @@ Insert into local_inv_departure (
 		    null   /* onward_carrier_code varchar(3) */,
 		    null   /* onward_flight_no varchar(5) */,
 		    '${arrival_date_time}'   /* arrival_date_time timestamptz */,
-		    '20071006074529000-20071006081002967_ssim-blx.SSM'   /* source_file varchar(256) */,
+		    'External change'   /* source_file varchar(256) */,
 		    (
 		    	select aircraft_configuration_id from aircraft_configuration as conf
 		    		inner join aircraft_type as airType
 		    			on conf.aircraft_type_id = airType.aircraft_type_id
-		    	where conf.configuration = '${aircraftConfiguration}' and airType.aircraft_type = '${aircraftType}'
+						inner join carrier_customer as cc
+							on airType.carrier_customer_id = cc.organisation_id
+						inner join carrier as c
+							on cc.main_carrier_id = c.carrier_id
+		    	where conf.configuration = '${aircraftConfiguration}' and airType.aircraft_type = '${aircraftType}' and c.carrier_code = '${carrier_code}'
 				)   /* aircraft_configuration_id int4 */,
 		    null   /* onward_operational_suffix varchar(1) */,
 		    356154   /* departure_inventory_id int4 */,
 		    null   /* last_booking_change timestamptz */;
 COMMIT;
 
-select currval('s_departure');
+select currval('s_departure_group');
